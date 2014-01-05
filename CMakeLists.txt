@@ -347,7 +347,7 @@ IF (USE_GLUT)
 		ENDIF (MSVC)
 	ENDIF (GLUT_FOUND)
 
-	IF(NOT WIN32)	
+	IF(NOT WIN32 AND NOT DUETTO)	
 		# This is added for linux. This should always work if everything is installed and working fine.
 		INCLUDE_DIRECTORIES(/usr/include /usr/local/include) 
 	ENDIF()
