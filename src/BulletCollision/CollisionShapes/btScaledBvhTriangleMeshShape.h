@@ -80,7 +80,7 @@ SIMD_FORCE_INLINE	int	btScaledBvhTriangleMeshShape::calculateSerializeBufferSize
 	return sizeof(btScaledTriangleMeshShapeData);
 }
 
-
+#ifndef __DUETTO__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 SIMD_FORCE_INLINE	const char*	btScaledBvhTriangleMeshShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -90,6 +90,6 @@ SIMD_FORCE_INLINE	const char*	btScaledBvhTriangleMeshShape::serialize(void* data
 	m_localScaling.serializeFloat(scaledMeshData->m_localScaling);
 	return "btScaledTriangleMeshShapeData";
 }
-
+#endif
 
 #endif //BT_SCALED_BVH_TRIANGLE_MESH_SHAPE_H

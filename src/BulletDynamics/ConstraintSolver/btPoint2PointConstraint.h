@@ -117,11 +117,12 @@ public:
 	///return the local value of parameter
 	virtual	btScalar getParam(int num, int axis = -1) const;
 
+#ifndef __DUETTO__
 	virtual	int	calculateSerializeBufferSize() const;
 
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 	virtual	const char*	serialize(void* dataBuffer, btSerializer* serializer) const;
-
+#endif
 
 };
 
@@ -141,7 +142,7 @@ struct	btPoint2PointConstraintDoubleData
 	btVector3DoubleData	m_pivotInB;
 };
 
-
+#ifndef __DUETTO__
 SIMD_FORCE_INLINE	int	btPoint2PointConstraint::calculateSerializeBufferSize() const
 {
 	return sizeof(btPoint2PointConstraintData);
@@ -159,5 +160,6 @@ SIMD_FORCE_INLINE	const char*	btPoint2PointConstraint::serialize(void* dataBuffe
 
 	return btPoint2PointConstraintDataName;
 }
+#endif
 
 #endif //BT_POINT2POINTCONSTRAINT_H

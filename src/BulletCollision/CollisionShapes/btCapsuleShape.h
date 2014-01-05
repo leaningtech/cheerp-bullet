@@ -169,6 +169,7 @@ SIMD_FORCE_INLINE	int	btCapsuleShape::calculateSerializeBufferSize() const
 	return sizeof(btCapsuleShapeData);
 }
 
+#ifndef __DUETTO__
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 SIMD_FORCE_INLINE	const char*	btCapsuleShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -180,5 +181,6 @@ SIMD_FORCE_INLINE	const char*	btCapsuleShape::serialize(void* dataBuffer, btSeri
 	
 	return "btCapsuleShapeData";
 }
+#endif
 
 #endif //BT_CAPSULE_SHAPE_H

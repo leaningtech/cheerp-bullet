@@ -85,6 +85,7 @@ SIMD_FORCE_INLINE	int	btStaticPlaneShape::calculateSerializeBufferSize() const
 	return sizeof(btStaticPlaneShapeData);
 }
 
+#ifndef __DUETTO__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 SIMD_FORCE_INLINE	const char*	btStaticPlaneShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -97,6 +98,7 @@ SIMD_FORCE_INLINE	const char*	btStaticPlaneShape::serialize(void* dataBuffer, bt
 		
 	return "btStaticPlaneShapeData";
 }
+#endif
 
 
 #endif //BT_STATIC_PLANE_SHAPE_H

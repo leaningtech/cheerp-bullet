@@ -552,12 +552,12 @@ public:
 
 	void setAxis( const btVector3& axis1, const btVector3& axis2);
 
-
+#ifndef __DUETTO__
 	virtual	int	calculateSerializeBufferSize() const;
 
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 	virtual	const char*	serialize(void* dataBuffer, btSerializer* serializer) const;
-
+#endif
 	
 };
 
@@ -578,6 +578,7 @@ struct btGeneric6DofConstraintData
 	int m_useOffsetForConstraintFrame;
 };
 
+#ifndef __DUETTO__
 SIMD_FORCE_INLINE	int	btGeneric6DofConstraint::calculateSerializeBufferSize() const
 {
 	return sizeof(btGeneric6DofConstraintData);
@@ -608,6 +609,7 @@ SIMD_FORCE_INLINE	const char*	btGeneric6DofConstraint::serialize(void* dataBuffe
 
 	return "btGeneric6DofConstraintData";
 }
+#endif
 
 
 

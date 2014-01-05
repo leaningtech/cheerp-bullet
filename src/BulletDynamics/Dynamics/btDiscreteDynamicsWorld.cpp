@@ -1370,7 +1370,7 @@ const btTypedConstraint* btDiscreteDynamicsWorld::getConstraint(int index) const
 }
 
 
-
+#ifndef __DUETTO__
 void	btDiscreteDynamicsWorld::serializeRigidBodies(btSerializer* serializer)
 {
 	int i;
@@ -1463,4 +1463,5 @@ void	btDiscreteDynamicsWorld::serialize(btSerializer* serializer)
 
 	serializer->finishSerialization();
 }
+#endif
 

@@ -134,9 +134,10 @@ public:
 
 	virtual	int	calculateSerializeBufferSize() const;
 
+#ifndef __DUETTO__
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 	virtual	const char*	serialize(void* dataBuffer, btSerializer* serializer) const;
-
+#endif
 	
 };
 
@@ -162,6 +163,7 @@ SIMD_FORCE_INLINE	int	btConvexInternalShape::calculateSerializeBufferSize() cons
 	return sizeof(btConvexInternalShapeData);
 }
 
+#ifndef __DUETTO__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 SIMD_FORCE_INLINE	const char*	btConvexInternalShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -174,7 +176,7 @@ SIMD_FORCE_INLINE	const char*	btConvexInternalShape::serialize(void* dataBuffer,
 
 	return "btConvexInternalShapeData";
 }
-
+#endif
 
 
 

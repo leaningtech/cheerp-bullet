@@ -3242,6 +3242,7 @@ int	btSoftBody::calculateSerializeBufferSize()	const
 	return sz;
 }
 
+#ifndef __DUETTO__
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btSoftBody::serialize(void* dataBuffer, class btSerializer* serializer) const
 {
@@ -3636,4 +3637,5 @@ const char*	btSoftBody::serialize(void* dataBuffer, class btSerializer* serializ
 
 	return btSoftBodyDataName;
 }
+#endif
 

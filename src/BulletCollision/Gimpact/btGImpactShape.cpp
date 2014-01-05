@@ -182,7 +182,7 @@ void btGImpactMeshShape::processAllTriangles(btTriangleCallback* callback,const 
 	}
 }
 
-
+#ifndef __DUETTO__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btGImpactMeshShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -200,4 +200,4 @@ const char*	btGImpactMeshShape::serialize(void* dataBuffer, btSerializer* serial
 
 	return "btGImpactMeshShapeData";
 }
-
+#endif

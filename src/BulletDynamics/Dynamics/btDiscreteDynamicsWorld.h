@@ -212,10 +212,10 @@ public:
 	{
 		return m_applySpeculativeContactRestitution;
 	}
-
+#ifndef __DUETTO__
 	///Preliminary serialization test for Bullet 2.76. Loading those files requires a separate parser (see Bullet/Demos/SerializeDemo)
 	virtual	void	serialize(btSerializer* serializer);
-
+#endif
 };
 
 #endif //BT_DISCRETE_DYNAMICS_WORLD_H

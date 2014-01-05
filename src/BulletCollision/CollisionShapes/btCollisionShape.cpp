@@ -95,6 +95,7 @@ void btCollisionShape::calculateTemporalAabb(const btTransform& curTrans,const b
 	temporalAabbMax += angularMotion3d;
 }
 
+#ifndef __DUETTO__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btCollisionShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -117,3 +118,4 @@ void	btCollisionShape::serializeSingleShape(btSerializer* serializer) const
 	const char* structType = serialize(chunk->m_oldPtr, serializer);
 	serializer->finalizeChunk(chunk,structType,BT_SHAPE_CODE,(void*)this);
 }
+#endif

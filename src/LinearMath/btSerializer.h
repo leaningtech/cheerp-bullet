@@ -25,7 +25,7 @@ subject to the following restrictions:
 #endif
 #include <string.h>
 
-
+#ifndef __DUETTO__
 
 ///only the 32bit versions for now
 extern char sBulletDNAstr[];
@@ -634,6 +634,7 @@ public:
 		}
 
 };
+#endif
 
 
 #endif //BT_SERIALIZER_H

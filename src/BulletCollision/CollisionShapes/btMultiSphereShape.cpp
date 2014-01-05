@@ -152,6 +152,7 @@ void	btMultiSphereShape::calculateLocalInertia(btScalar mass,btVector3& inertia)
 }
 
 
+#ifndef __DUETTO__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btMultiSphereShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -176,5 +177,6 @@ const char*	btMultiSphereShape::serialize(void* dataBuffer, btSerializer* serial
 	
 	return "btMultiSphereShapeData";
 }
+#endif
 
 

@@ -132,11 +132,12 @@ public:
 	}
 
 	virtual	int	calculateSerializeBufferSize() const;
-
+#ifndef __DUETTO__
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 	virtual	const char*	serialize(void* dataBuffer, btSerializer* serializer) const;
 
 	virtual void	serializeSingleShape(btSerializer* serializer) const;
+#endif
 
 };	
 

@@ -512,10 +512,10 @@ public:
 	{
 		m_forceUpdateAllAabbs = forceUpdateAllAabbs;
 	}
-
+#ifndef __DUETTO__
 	///Preliminary serialization test for Bullet 2.76. Loading those files requires a separate parser (Bullet/Demos/SerializeDemo)
 	virtual	void	serialize(btSerializer* serializer);
-
+#endif
 };
 
 

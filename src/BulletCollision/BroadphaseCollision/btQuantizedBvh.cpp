@@ -842,6 +842,7 @@ unsigned btQuantizedBvh::calculateSerializeBufferSize() const
 	return baseSize + m_curNodeIndex * sizeof(btOptimizedBvhNode);
 }
 
+#ifndef __DUETTO__
 bool btQuantizedBvh::serialize(void *o_alignedDataBuffer, unsigned /*i_dataBufferSize */, bool i_swapEndian) const
 {
 	btAssert(m_subtreeHeaderCount == m_SubtreeHeaders.size());
@@ -1133,6 +1134,7 @@ btQuantizedBvh *btQuantizedBvh::deSerializeInPlace(void *i_alignedDataBuffer, un
 
 	return bvh;
 }
+#endif
 
 // Constructor that prevents btVector3's default constructor from being called
 btQuantizedBvh::btQuantizedBvh(btQuantizedBvh &self, bool /* ownsMemory */) :
@@ -1288,7 +1290,7 @@ void btQuantizedBvh::deSerializeDouble(struct btQuantizedBvhDoubleData& quantize
 }
 
 
-
+#ifndef __DUETTO__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btQuantizedBvh::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -1369,7 +1371,7 @@ const char*	btQuantizedBvh::serialize(void* dataBuffer, btSerializer* serializer
 	return btQuantizedBvhDataName;
 }
 
-
+#endif
 
 
 

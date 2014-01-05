@@ -533,11 +533,12 @@ public:
 
 	virtual	int	calculateSerializeBufferSize()	const;
 
+#ifndef __DUETTO__
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 	virtual	const char*	serialize(void* dataBuffer,  class btSerializer* serializer) const;
 
 	virtual void serializeSingleObject(class btSerializer* serializer) const;
-
+#endif
 };
 
 //@todo add m_optionalMotionState and m_constraintRefs to btRigidBodyData

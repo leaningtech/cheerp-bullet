@@ -301,7 +301,7 @@ struct btSliderConstraintData
 
 };
 
-
+#ifndef __DUETTO__
 SIMD_FORCE_INLINE		int	btSliderConstraint::calculateSerializeBufferSize() const
 {
 	return sizeof(btSliderConstraintData);
@@ -328,6 +328,7 @@ SIMD_FORCE_INLINE	const char*	btSliderConstraint::serialize(void* dataBuffer, bt
 
 	return "btSliderConstraintData";
 }
+#endif
 
 
 

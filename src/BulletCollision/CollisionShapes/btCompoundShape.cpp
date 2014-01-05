@@ -310,12 +310,12 @@ void btCompoundShape::createAabbTreeFromChildren()
             child.m_childShape->getAabb(child.m_transform,localAabbMin,localAabbMax);
 
             const btDbvtVolume  bounds=btDbvtVolume::FromMM(localAabbMin,localAabbMax);
-            child.m_node = m_dynamicAabbTree->insert(bounds,(void*)index);
+            child.m_node = m_dynamicAabbTree->insert(bounds,index);
         }
     }
 }
 
-
+#ifndef __DUETTO__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btCompoundShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {
@@ -351,4 +351,5 @@ const char*	btCompoundShape::serialize(void* dataBuffer, btSerializer* serialize
 	}
 	return "btCompoundShapeData";
 }
+#endif
 

@@ -317,7 +317,7 @@ struct	btConeTwistConstraintData
 };
 	
 
-
+#ifndef __DUETTO__
 SIMD_FORCE_INLINE int	btConeTwistConstraint::calculateSerializeBufferSize() const
 {
 	return sizeof(btConeTwistConstraintData);
@@ -344,6 +344,6 @@ SIMD_FORCE_INLINE const char*	btConeTwistConstraint::serialize(void* dataBuffer,
 
 	return "btConeTwistConstraintData";
 }
-
+#endif
 
 #endif //BT_CONETWISTCONSTRAINT_H

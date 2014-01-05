@@ -357,6 +357,7 @@ int	btRigidBody::calculateSerializeBufferSize()	const
 	return sz;
 }
 
+#ifndef __DUETTO__
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btRigidBody::serialize(void* dataBuffer, class btSerializer* serializer) const
 {
@@ -396,5 +397,6 @@ void btRigidBody::serializeSingleObject(class btSerializer* serializer) const
 	const char* structType = serialize(chunk->m_oldPtr, serializer);
 	serializer->finalizeChunk(chunk,structType,BT_RIGIDBODY_CODE,(void*)this);
 }
+#endif
 
 

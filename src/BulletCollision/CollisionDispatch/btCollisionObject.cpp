@@ -67,6 +67,7 @@ void btCollisionObject::activate(bool forceActivation) const
 	}
 }
 
+#ifndef __DUETTO__
 const char* btCollisionObject::serialize(void* dataBuffer, btSerializer* serializer) const
 {
 
@@ -114,3 +115,4 @@ void btCollisionObject::serializeSingleObject(class btSerializer* serializer) co
 	const char* structType = serialize(chunk->m_oldPtr, serializer);
 	serializer->finalizeChunk(chunk,structType,BT_COLLISIONOBJECT_CODE,(void*)this);
 }
+#endif

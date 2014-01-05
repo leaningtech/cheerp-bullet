@@ -343,7 +343,7 @@ struct	btHingeConstraintFloatData
 };
 
 
-
+#ifndef __DUETTO__
 SIMD_FORCE_INLINE	int	btHingeConstraint::calculateSerializeBufferSize() const
 {
 	return sizeof(btHingeConstraintData);
@@ -379,5 +379,6 @@ SIMD_FORCE_INLINE	const char*	btHingeConstraint::serialize(void* dataBuffer, btS
 
 	return btHingeConstraintDataName;
 }
+#endif
 
 #endif //BT_HINGECONSTRAINT_H
