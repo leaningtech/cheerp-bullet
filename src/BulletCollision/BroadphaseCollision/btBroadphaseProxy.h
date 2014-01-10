@@ -190,7 +190,7 @@ ATTRIBUTE_ALIGNED16(struct) btBroadphasePair
 	m_pProxy0(0),
 		m_pProxy1(0),
 		m_algorithm(0),
-		m_internalInfo1(0)
+		m_internalTmpValue(0)
 	{
 	}
 
@@ -200,7 +200,7 @@ BT_DECLARE_ALIGNED_ALLOCATOR();
 		:		m_pProxy0(other.m_pProxy0),
 				m_pProxy1(other.m_pProxy1),
 				m_algorithm(other.m_algorithm),
-				m_internalInfo1(other.m_internalInfo1)
+				m_internalTmpValue(other.m_internalTmpValue)
 	{
 	}
 	btBroadphasePair(btBroadphaseProxy& proxy0,btBroadphaseProxy& proxy1)
@@ -219,7 +219,7 @@ BT_DECLARE_ALIGNED_ALLOCATOR();
         }
 
 		m_algorithm = 0;
-		m_internalInfo1 = 0;
+		m_internalTmpValue = 0;
 
 	}
 	
@@ -227,7 +227,7 @@ BT_DECLARE_ALIGNED_ALLOCATOR();
 	btBroadphaseProxy* m_pProxy1;
 	
 	mutable btCollisionAlgorithm* m_algorithm;
-	union { void* m_internalInfo1; int m_internalTmpValue;};//don't use this data, it will be removed in future version.
+	int m_internalTmpValue;//don't use this data, it will be removed in future version.
 
 };
 
