@@ -124,10 +124,7 @@ enum GIM_SCALAR_TYPES
     }\
     else\
     {\
-        GREAL _x = va * 0.5f;\
-        GUINT _y = 0x5f3759df - ( GIM_IR(va) >> 1);\
-        isva = GIM_FR(_y);\
-        isva  = isva * ( 1.5f - ( _x * isva * isva ) );\
+        isva  = 1/sqrt(isva);\
     }\
 }\
 

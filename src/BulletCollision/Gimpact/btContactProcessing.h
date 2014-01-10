@@ -75,10 +75,10 @@ public:
 	//! Calcs key for coord classification
     SIMD_FORCE_INLINE unsigned int calc_key_contact() const
     {
-    	int _coords[] = {
-    		(int)(m_point[0]*1000.0f+1.0f),
-    		(int)(m_point[1]*1333.0f),
-    		(int)(m_point[2]*2133.0f+3.0f)};
+    	unsigned int _coords[] = {
+    		(unsigned int)(m_point[0]*1000.0f+1.0f),
+    		(unsigned int)(m_point[1]*1333.0f),
+    		(unsigned int)(m_point[2]*2133.0f+3.0f)};
 		unsigned int _hash=0;
 		unsigned int *_uitmp = (unsigned int *)(&_coords[0]);
 		_hash = *_uitmp;

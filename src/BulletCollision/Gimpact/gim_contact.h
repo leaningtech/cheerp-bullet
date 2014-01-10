@@ -89,10 +89,10 @@ public:
 	//! Calcs key for coord classification
     SIMD_FORCE_INLINE GUINT calc_key_contact() const
     {
-    	GINT _coords[] = {
-    		(GINT)(m_point[0]*1000.0f+1.0f),
-    		(GINT)(m_point[1]*1333.0f),
-    		(GINT)(m_point[2]*2133.0f+3.0f)};
+    	GUINT _coords[] = {
+    		(GUINT)(m_point[0]*1000.0f+1.0f),
+    		(GUINT)(m_point[1]*1333.0f),
+    		(GUINT)(m_point[2]*2133.0f+3.0f)};
 		GUINT _hash=0;
 		GUINT *_uitmp = (GUINT *)(&_coords[0]);
 		_hash = *_uitmp;

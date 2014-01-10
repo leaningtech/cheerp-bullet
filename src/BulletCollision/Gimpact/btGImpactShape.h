@@ -734,15 +734,13 @@ public:
 	//! call when reading child shapes
 	virtual void lockChildShapes() const
 	{
-		void * dummy = (void*)(m_box_set.getPrimitiveManager());
-		TrimeshPrimitiveManager * dummymanager = static_cast<TrimeshPrimitiveManager *>(dummy);
+		TrimeshPrimitiveManager *dummymanager = static_cast<TrimeshPrimitiveManager*>(m_box_set.getPrimitiveManager());
 		dummymanager->lock();
 	}
 
 	virtual void unlockChildShapes()  const
 	{
-		void * dummy = (void*)(m_box_set.getPrimitiveManager());
-		TrimeshPrimitiveManager * dummymanager = static_cast<TrimeshPrimitiveManager *>(dummy);
+		TrimeshPrimitiveManager *dummymanager = static_cast<TrimeshPrimitiveManager*>(m_box_set.getPrimitiveManager());
 		dummymanager->unlock();
 	}
 
