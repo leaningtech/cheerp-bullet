@@ -180,12 +180,9 @@ struct	btDbvtNode
 	btDbvtNode*		parent;
 	DBVT_INLINE bool	isleaf() const		{ return(childs[1]==0); }
 	DBVT_INLINE bool	isinternal() const	{ return(!isleaf()); }
-	union
-	{
-		btDbvtNode*	childs[2];
-		void*	data;
-		int		dataAsInt;
-	};
+	btDbvtNode*	childs[2];
+	void*		data;
+	int		dataAsInt;
 };
 
 ///The btDbvt class implements a fast dynamic bounding volume tree based on axis aligned bounding boxes (aabb tree).
@@ -275,6 +272,7 @@ struct	btDbvt
 	void			optimizeTopDown(int bu_treshold=128);
 	void			optimizeIncremental(int passes);
 	btDbvtNode*		insert(const btDbvtVolume& box,void* data);
+	btDbvtNode*		insert(const btDbvtVolume& box,int);
 	void			update(btDbvtNode* leaf,int lookahead=-1);
 	void			update(btDbvtNode* leaf,btDbvtVolume& volume);
 	bool			update(btDbvtNode* leaf,btDbvtVolume& volume,const btVector3& velocity,btScalar margin);

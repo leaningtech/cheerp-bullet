@@ -97,7 +97,9 @@ static DBVT_INLINE btDbvtNode*	createnode(	btDbvt* pdbvt,
 	else
 	{ node=new(btAlignedAlloc(sizeof(btDbvtNode),16)) btDbvtNode(); }
 	node->parent	=	parent;
-	node->data		=	data;
+	node->data	=	data;
+	node->dataAsInt	=	0;
+	node->childs[0]	=	0;
 	node->childs[1]	=	0;
 	return(node);
 }
@@ -122,6 +124,35 @@ static DBVT_INLINE btDbvtNode*	createnode(	btDbvt* pdbvt,
 {
 	btDbvtNode*	node=createnode(pdbvt,parent,data);
 	Merge(volume0,volume1,node->volume);
+	return(node);
+}
+
+//
+static DBVT_INLINE btDbvtNode*	createnode(	btDbvt* pdbvt,
+										   btDbvtNode* parent,
+										   int data)
+{
+	btDbvtNode*	node;
+	if(pdbvt->m_free)
+	{ node=pdbvt->m_free;pdbvt->m_free=0; }
+	else
+	{ node=new(btAlignedAlloc(sizeof(btDbvtNode),16)) btDbvtNode(); }
+	node->parent	=	parent;
+	node->data	=	NULL;
+	node->dataAsInt	=	data;
+	node->childs[0]	=	0;
+	node->childs[1]	=	0;
+	return(node);
+}
+
+//
+static DBVT_INLINE btDbvtNode*	createnode(	btDbvt* pdbvt,
+										   btDbvtNode* parent,
+										   const btDbvtVolume& volume,
+										   int data)
+{
+	btDbvtNode*	node=createnode(pdbvt,parent,data);
+	node->volume=volume;
 	return(node);
 }
 
@@ -481,6 +512,15 @@ void			btDbvt::optimizeIncremental(int passes)
 
 //
 btDbvtNode*	btDbvt::insert(const btDbvtVolume& volume,void* data)
+{
+	btDbvtNode*	leaf=createnode(this,0,volume,data);
+	insertleaf(this,m_root,leaf);
+	++m_leaves;
+	return(leaf);
+}
+
+//
+btDbvtNode*	btDbvt::insert(const btDbvtVolume& volume,int data)
 {
 	btDbvtNode*	leaf=createnode(this,0,volume,data);
 	insertleaf(this,m_root,leaf);
