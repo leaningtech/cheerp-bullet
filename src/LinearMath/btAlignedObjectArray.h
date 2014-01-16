@@ -99,7 +99,7 @@ protected:
 			}
 		}
 
-		SIMD_FORCE_INLINE	void* allocate(int size)
+		SIMD_FORCE_INLINE	T* allocate(int size)
 		{
 			if (size)
 				return m_allocator.allocate(size);
