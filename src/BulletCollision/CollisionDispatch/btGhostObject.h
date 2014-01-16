@@ -147,7 +147,7 @@ public:
 		return 0;
 	}
 
-	virtual void*	removeOverlappingPair(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1,btDispatcher* dispatcher)
+	virtual void	removeOverlappingPair(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1,btDispatcher* dispatcher)
 	{
 		btCollisionObject* colObj0 = (btCollisionObject*) proxy0->m_clientObject;
 		btCollisionObject* colObj1 = (btCollisionObject*) proxy1->m_clientObject;
@@ -157,7 +157,6 @@ public:
 			ghost0->removeOverlappingObjectInternal(proxy1,dispatcher,proxy0);
 		if (ghost1)
 			ghost1->removeOverlappingObjectInternal(proxy0,dispatcher,proxy1);
-		return 0;
 	}
 
 	virtual void	removeOverlappingPairsContainingProxy(btBroadphaseProxy* /*proxy0*/,btDispatcher* /*dispatcher*/)

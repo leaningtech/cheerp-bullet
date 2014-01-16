@@ -104,7 +104,7 @@ public:
 	
 	void	removeOverlappingPairsContainingProxy(btBroadphaseProxy* proxy,btDispatcher* dispatcher);
 
-	virtual void*	removeOverlappingPair(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1,btDispatcher* dispatcher);
+	virtual void	removeOverlappingPair(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1,btDispatcher* dispatcher);
 	
 	SIMD_FORCE_INLINE bool needsBroadphaseCollision(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1) const
 	{
@@ -302,7 +302,7 @@ class	btSortedOverlappingPairCache : public btOverlappingPairCache
 
 		virtual void	processAllOverlappingPairs(btOverlapCallback*,btDispatcher* dispatcher);
 
-		void*	removeOverlappingPair(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1,btDispatcher* dispatcher);
+		void	removeOverlappingPair(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1,btDispatcher* dispatcher);
 
 		void	cleanOverlappingPair(btBroadphasePair& pair,btDispatcher* dispatcher);
 		
@@ -446,9 +446,8 @@ public:
 		return 0;
 	}
 
-	virtual void*	removeOverlappingPair(btBroadphaseProxy* /*proxy0*/,btBroadphaseProxy* /*proxy1*/,btDispatcher* /*dispatcher*/)
+	virtual void	removeOverlappingPair(btBroadphaseProxy* /*proxy0*/,btBroadphaseProxy* /*proxy1*/,btDispatcher* /*dispatcher*/)
 	{
-		return 0;
 	}
 
 	virtual void	removeOverlappingPairsContainingProxy(btBroadphaseProxy* /*proxy0*/,btDispatcher* /*dispatcher*/)

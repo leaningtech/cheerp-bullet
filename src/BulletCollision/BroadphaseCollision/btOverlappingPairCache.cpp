@@ -269,7 +269,7 @@ btBroadphasePair* btHashedOverlappingPairCache::internalAddPair(btBroadphaseProx
 
 
 
-void* btHashedOverlappingPairCache::removeOverlappingPair(btBroadphaseProxy* proxy0, btBroadphaseProxy* proxy1,btDispatcher* dispatcher)
+void btHashedOverlappingPairCache::removeOverlappingPair(btBroadphaseProxy* proxy0, btBroadphaseProxy* proxy1,btDispatcher* dispatcher)
 {
 	gRemovePairs++;
 	if(proxy0->m_uniqueId>proxy1->m_uniqueId) 
@@ -285,12 +285,10 @@ void* btHashedOverlappingPairCache::removeOverlappingPair(btBroadphaseProxy* pro
 	btBroadphasePair* pair = internalFindPair(proxy0, proxy1, hash);
 	if (pair == NULL)
 	{
-		return 0;
+		return;
 	}
 
 	cleanOverlappingPair(*pair,dispatcher);
-
-	void* userData = pair->m_internalInfo1;
 
 	btAssert(pair->m_pProxy0->getUid() == proxyId1);
 	btAssert(pair->m_pProxy1->getUid() == proxyId2);
@@ -332,7 +330,7 @@ void* btHashedOverlappingPairCache::removeOverlappingPair(btBroadphaseProxy* pro
 	if (lastPairIndex == pairIndex)
 	{
 		m_overlappingPairArray.pop_back();
-		return userData;
+		return;
 	}
 
 	// Remove the last pair from the hash table.
@@ -368,8 +366,6 @@ void* btHashedOverlappingPairCache::removeOverlappingPair(btBroadphaseProxy* pro
 	m_hashTable[lastHash] = pairIndex;
 
 	m_overlappingPairArray.pop_back();
-
-	return userData;
 }
 //#include <stdio.h>
 
@@ -426,7 +422,7 @@ void	btHashedOverlappingPairCache::sortOverlappingPairs(btDispatcher* dispatcher
 }
 
 
-void*	btSortedOverlappingPairCache::removeOverlappingPair(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1, btDispatcher* dispatcher )
+void	btSortedOverlappingPairCache::removeOverlappingPair(btBroadphaseProxy* proxy0,btBroadphaseProxy* proxy1, btDispatcher* dispatcher )
 {
 	if (!hasDeferredRemoval())
 	{
@@ -437,18 +433,14 @@ void*	btSortedOverlappingPairCache::removeOverlappingPair(btBroadphaseProxy* pro
 		{
 			gOverlappingPairs--;
 			btBroadphasePair& pair = m_overlappingPairArray[findIndex];
-			void* userData = pair.m_internalInfo1;
 			cleanOverlappingPair(pair,dispatcher);
 			if (m_ghostPairCallback)
 				m_ghostPairCallback->removeOverlappingPair(proxy0, proxy1,dispatcher);
 			
 			m_overlappingPairArray.swap(findIndex,m_overlappingPairArray.capacity()-1);
 			m_overlappingPairArray.pop_back();
-			return userData;
 		}
 	}
-
-	return 0;
 }
 
 
