@@ -67,11 +67,8 @@ ATTRIBUTE_ALIGNED16(class) btTypedConstraint : public btTypedObject
 {
 	int	m_userConstraintType;
 
-	union
-	{
-		int	m_userConstraintId;
-		void* m_userConstraintPtr;
-	};
+	int	m_userConstraintId;
+	void* m_userConstraintPtr;
 
 	btScalar	m_breakingImpulseThreshold;
 	bool		m_isEnabled;
