@@ -78,7 +78,12 @@ PHY_ScalarType hdt, bool flipQuadEdges
 	m_width = (btScalar) (heightStickWidth - 1);
 	m_length = (btScalar) (heightStickLength - 1);
 	m_heightScale = heightScale;
-	m_heightfieldDataUnknown = heightfieldData;
+	if(hdt == PHY_UCHAR)
+		m_heightfieldDataUnsignedChar = (const unsigned char*)heightfieldData;
+	else if(hdt == PHY_FLOAT)
+		m_heightfieldDataFloat = (const btScalar*)heightfieldData;
+	else if(hdt == PHY_SHORT)
+		m_heightfieldDataShort = (const short*)heightfieldData;
 	m_heightDataType = hdt;
 	m_flipQuadEdges = flipQuadEdges;
 	m_useDiamondSubdivision = false;

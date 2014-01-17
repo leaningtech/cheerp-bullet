@@ -83,13 +83,9 @@ protected:
 	btScalar m_width;
 	btScalar m_length;
 	btScalar m_heightScale;
-	union
-	{
 		const unsigned char*	m_heightfieldDataUnsignedChar;
 		const short*		m_heightfieldDataShort;
 		const btScalar*			m_heightfieldDataFloat;
-		const void*	m_heightfieldDataUnknown;
-	};
 
 	PHY_ScalarType	m_heightDataType;	
 	bool	m_flipQuadEdges;
