@@ -637,7 +637,7 @@ struct btTypedObject
 };
 
 
-  
+#ifndef __DUETTO__ 
 ///align a pointer to the provided alignment, upwards
 template <typename T>T* btAlignPointer(T* unalignedPtr, size_t alignment)
 {
@@ -659,5 +659,6 @@ template <typename T>T* btAlignPointer(T* unalignedPtr, size_t alignment)
 	converter.integer &= bit_mask;
 	return converter.ptr;
 }
+#endif
 
 #endif //BT_SCALAR_H
