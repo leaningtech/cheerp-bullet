@@ -20,7 +20,6 @@ SET(BulletDynamics_SRCS
 	Dynamics/btDiscreteDynamicsWorld.cpp
 	Dynamics/btRigidBody.cpp
 	Dynamics/btSimpleDynamicsWorld.cpp
-	Dynamics/Bullet-C-API.cpp
 	Vehicle/btRaycastVehicle.cpp
 	Vehicle/btWheelInfo.cpp
 )
