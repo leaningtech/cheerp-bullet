@@ -28,9 +28,7 @@ m_weldingThreshold(0.0)
 	meshIndex.m_numVertices = 0;
 	meshIndex.m_indexType = PHY_INTEGER;
 	meshIndex.m_triangleIndexBase = 0;
-	meshIndex.m_triangleIndexStride = 3*sizeof(int);
 	meshIndex.m_vertexBase = 0;
-	meshIndex.m_vertexStride = sizeof(btVector3);
 	m_indexedMeshes.push_back(meshIndex);
 
 	if (m_use32bitIndices)
@@ -38,25 +36,21 @@ m_weldingThreshold(0.0)
 		m_indexedMeshes[0].m_numTriangles = m_32bitIndices.size()/3;
 		m_indexedMeshes[0].m_triangleIndexBase = 0;
 		m_indexedMeshes[0].m_indexType = PHY_INTEGER;
-		m_indexedMeshes[0].m_triangleIndexStride = 3*sizeof(int);
 	} else
 	{
 		m_indexedMeshes[0].m_numTriangles = m_16bitIndices.size()/3;
 		m_indexedMeshes[0].m_triangleIndexBase = 0;
 		m_indexedMeshes[0].m_indexType = PHY_SHORT;
-		m_indexedMeshes[0].m_triangleIndexStride = 3*sizeof(short int);
 	}
 
 	if (m_use4componentVertices)
 	{
-		m_indexedMeshes[0].m_numVertices = m_4componentVertices.size();
+		m_indexedMeshes[0].m_numVertices = m_Vertices.size()/4;
 		m_indexedMeshes[0].m_vertexBase = 0;
-		m_indexedMeshes[0].m_vertexStride = sizeof(btVector3);
 	} else
 	{
-		m_indexedMeshes[0].m_numVertices = m_3componentVertices.size()/3;
+		m_indexedMeshes[0].m_numVertices = m_Vertices.size()/3;
 		m_indexedMeshes[0].m_vertexBase = 0;
-		m_indexedMeshes[0].m_vertexStride = 3*sizeof(btScalar);
 	}
 
 
@@ -67,11 +61,11 @@ void	btTriangleMesh::addIndex(int index)
 	if (m_use32bitIndices)
 	{
 		m_32bitIndices.push_back(index);
-		m_indexedMeshes[0].m_triangleIndexBase = (unsigned char*) &m_32bitIndices[0];
+		m_indexedMeshes[0].m_triangleIndexBase = (unsigned int*) &m_32bitIndices[0];
 	} else
 	{
 		m_16bitIndices.push_back(index);
-		m_indexedMeshes[0].m_triangleIndexBase = (unsigned char*) &m_16bitIndices[0];
+		m_indexedMeshes[0].m_triangleIndexBase = (unsigned int*) &m_16bitIndices[0];
 	}
 }
 
@@ -84,40 +78,43 @@ int	btTriangleMesh::findOrAddVertex(const btVector3& vertex, bool removeDuplicat
 	{
 		if (removeDuplicateVertices)
 			{
-			for (int i=0;i< m_4componentVertices.size();i++)
+			for (int i=0;i< m_Vertices.size();i+=4)
 			{
-				if ((m_4componentVertices[i]-vertex).length2() <= m_weldingThreshold)
+				btVector3 vtx(m_Vertices[i],m_Vertices[i+1],m_Vertices[i+2],m_Vertices[i+3]);
+				if ((vtx-vertex).length2() <= m_weldingThreshold)
 				{
-					return i;
+					return i/4;
 				}
 			}
 		}
+		m_Vertices.push_back((float)vertex.getX());
+		m_Vertices.push_back((float)vertex.getY());
+		m_Vertices.push_back((float)vertex.getZ());
+		m_Vertices.push_back((float)vertex.getW());
 		m_indexedMeshes[0].m_numVertices++;
-		m_4componentVertices.push_back(vertex);
-		m_indexedMeshes[0].m_vertexBase = (unsigned char*)&m_4componentVertices[0];
-
-		return m_4componentVertices.size()-1;
+		m_indexedMeshes[0].m_vertexBase = &m_Vertices[0];
+		return (m_Vertices.size()/4)-1;
 		
 	} else
 	{
 		
 		if (removeDuplicateVertices)
 		{
-			for (int i=0;i< m_3componentVertices.size();i+=3)
+			for (int i=0;i< m_Vertices.size();i+=3)
 			{
-				btVector3 vtx(m_3componentVertices[i],m_3componentVertices[i+1],m_3componentVertices[i+2]);
+				btVector3 vtx(m_Vertices[i],m_Vertices[i+1],m_Vertices[i+2]);
 				if ((vtx-vertex).length2() <= m_weldingThreshold)
 				{
 					return i/3;
 				}
 			}
 	}
-		m_3componentVertices.push_back((float)vertex.getX());
-		m_3componentVertices.push_back((float)vertex.getY());
-		m_3componentVertices.push_back((float)vertex.getZ());
+		m_Vertices.push_back((float)vertex.getX());
+		m_Vertices.push_back((float)vertex.getY());
+		m_Vertices.push_back((float)vertex.getZ());
 		m_indexedMeshes[0].m_numVertices++;
-		m_indexedMeshes[0].m_vertexBase = (unsigned char*)&m_3componentVertices[0];
-		return (m_3componentVertices.size()/3)-1;
+		m_indexedMeshes[0].m_vertexBase = &m_Vertices[0];
+		return (m_Vertices.size()/3)-1;
 	}
 
 }
@@ -143,10 +140,10 @@ void btTriangleMesh::preallocateVertices(int numverts)
 {
 	if (m_use4componentVertices)
 	{
-		m_4componentVertices.reserve(numverts);
+		m_Vertices.reserve(numverts*4);
 	} else
 	{
-		m_3componentVertices.reserve(numverts);
+		m_Vertices.reserve(numverts*3);
 	}
 }
 

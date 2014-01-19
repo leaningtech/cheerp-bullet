@@ -39,9 +39,7 @@ public:
             const unsigned char *vertexbase;
             int numverts;
             PHY_ScalarType type;
-            int stride;
-            const unsigned char *indexbase;
-            int indexstride;
+            const unsigned int *indexbase;
             int numfaces;
             PHY_ScalarType indicestype;
 
@@ -53,9 +51,7 @@ public:
                     &vertexbase,
                     numverts,
                     type,
-                    stride,
                     &indexbase,
-                    indexstride,
                     numfaces,
                     indicestype,
                     i);
@@ -72,9 +68,7 @@ public:
             const unsigned char *vertexbase;
             int numverts;
             PHY_ScalarType type;
-            int stride;
-            const unsigned char *indexbase;
-            int indexstride;
+            const unsigned int *indexbase;
             int numfaces;
             PHY_ScalarType indicestype;
 
@@ -86,9 +80,7 @@ public:
                     &vertexbase,
                     numverts,
                     type,
-                    stride,
                     &indexbase,
-                    indexstride,
                     numfaces,
                     indicestype,
                     i);

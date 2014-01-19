@@ -329,27 +329,27 @@ void btGenerateInternalEdgeInfo (btBvhTriangleMeshShape*trimeshShape, btTriangle
 		int numverts = 0;
 		PHY_ScalarType type = PHY_INTEGER;
 		int stride = 0;
-		const unsigned char *indexbase = 0;
+		const unsigned int *indexbase = 0;
 		int indexstride = 0;
 		int numfaces = 0;
 		PHY_ScalarType indicestype = PHY_INTEGER;
 		//PHY_ScalarType indexType=0;
 
 		btVector3 triangleVerts[3];
-		meshInterface->getLockedReadOnlyVertexIndexBase(&vertexbase,numverts,	type,stride,&indexbase,indexstride,numfaces,indicestype,partId);
+		meshInterface->getLockedReadOnlyVertexIndexBase(&vertexbase,numverts,	type,&indexbase,numfaces,indicestype,partId);
 		btVector3 aabbMin,aabbMax;
 
 		for (int triangleIndex = 0 ; triangleIndex < numfaces;triangleIndex++)
 		{
-			unsigned int* gfxbase = (unsigned int*)(indexbase+triangleIndex*indexstride);
+			const unsigned int* gfxbase = indexbase+triangleIndex;
 
 			for (int j=2;j>=0;j--)
 			{
 
-				int graphicsindex = indicestype==PHY_SHORT?((unsigned short*)gfxbase)[j]:gfxbase[j];
+				int graphicsindex = indicestype==PHY_SHORT?((unsigned short*)indexbase)[j+triangleIndex*3]:indexbase[j+triangleIndex*3];
 				if (type == PHY_FLOAT)
 				{
-					float* graphicsbase = (float*)(vertexbase+graphicsindex*stride);
+					float* graphicsbase = (float*)(vertexbase)+graphicsindex;
 					triangleVerts[j] = btVector3(
 						graphicsbase[0]*meshScaling.getX(),
 						graphicsbase[1]*meshScaling.getY(),
@@ -357,7 +357,7 @@ void btGenerateInternalEdgeInfo (btBvhTriangleMeshShape*trimeshShape, btTriangle
 				}
 				else
 				{
-					double* graphicsbase = (double*)(vertexbase+graphicsindex*stride);
+					double* graphicsbase = (double*)(vertexbase)+graphicsindex;
 					triangleVerts[j] = btVector3( btScalar(graphicsbase[0]*meshScaling.getX()), btScalar(graphicsbase[1]*meshScaling.getY()), btScalar(graphicsbase[2]*meshScaling.getZ()));
 				}
 			}

@@ -61,7 +61,6 @@ public:
 		mFlags          = QF_DEFAULT;
 		mVcount         = 0;
 		mVertices       = 0;
-		mVertexStride   = sizeof(btVector3);
 		mNormalEpsilon  = 0.001f;
 		mMaxVertices	= 4096; // maximum number of points to be considered for a convex hull.
 		mMaxFaces	= 4096;
@@ -69,13 +68,11 @@ public:
 
 	HullDesc(HullFlag flag,
 		 unsigned int vcount,
-		 const btVector3 *vertices,
-		 unsigned int stride = sizeof(btVector3))
+		 const btVector3 *vertices)
 	{
 		mFlags          = flag;
 		mVcount         = vcount;
 		mVertices       = vertices;
-		mVertexStride   = stride;
 		mNormalEpsilon  = btScalar(0.001);
 		mMaxVertices    = 4096;
 	}
@@ -99,7 +96,6 @@ public:
 	unsigned int      mFlags;           // flags to use when generating the convex hull.
 	unsigned int      mVcount;          // number of vertices in the input point cloud
 	const btVector3  *mVertices;        // the array of vertices.
-	unsigned int      mVertexStride;    // the stride of each vertex, in bytes.
 	btScalar             mNormalEpsilon;   // the epsilon for removing duplicates.  This is a normalized value, if normalized bit is on.
 	unsigned int      mMaxVertices;     // maximum number of vertices to be considered for the hull!
 	unsigned int      mMaxFaces;
@@ -229,7 +225,6 @@ private:
 
 	bool CleanupVertices(unsigned int svcount,
 			     const btVector3* svertices,
-			     unsigned int stride,
 			     unsigned int &vcount, // output number of vertices
 			     btVector3* vertices, // location to store the results.
 			     btScalar  normalepsilon,

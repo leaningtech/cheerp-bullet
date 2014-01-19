@@ -66,10 +66,8 @@ btShapeHull::buildHull (btScalar /*margin*/)
 
 #ifdef BT_USE_DOUBLE_PRECISION
 	hd.mVertices = &supportPoints[0];
-	hd.mVertexStride = sizeof(btVector3);
 #else
 	hd.mVertices = &supportPoints[0];
-	hd.mVertexStride = sizeof (btVector3);
 #endif
 
 	HullLibrary hl;

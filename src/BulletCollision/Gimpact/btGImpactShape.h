@@ -536,9 +536,7 @@ public:
 		const unsigned char *vertexbase;
 		int numverts;
 		PHY_ScalarType type;
-		int stride;
-		const unsigned char *indexbase;
-		int indexstride;
+		const unsigned int *indexbase;
 		int  numfaces;
 		PHY_ScalarType indicestype;
 
@@ -551,9 +549,7 @@ public:
 			m_lock_count = 0;
 			vertexbase = 0;
 			numverts = 0;
-			stride = 0;
 			indexbase = 0;
-			indexstride = 0;
 			numfaces = 0;
 		}
 
@@ -567,9 +563,7 @@ public:
 			m_lock_count = 0;
 			vertexbase = 0;
 			numverts = 0;
-			stride = 0;
 			indexbase = 0;
-			indexstride = 0;
 			numfaces = 0;
 
 		}
@@ -584,9 +578,7 @@ public:
 			m_lock_count = 0;
 			vertexbase = 0;
 			numverts = 0;
-			stride = 0;
 			indexbase = 0;
-			indexstride = 0;
 			numfaces = 0;
 
 		}
@@ -602,7 +594,7 @@ public:
 			}
 			m_meshInterface->getLockedReadOnlyVertexIndexBase(
 				&vertexbase,numverts,
-				type, stride,&indexbase, indexstride, numfaces,indicestype,m_part);
+				type, &indexbase, numfaces,indicestype,m_part);
 
 			m_lock_count = 1;
 		}
@@ -639,14 +631,14 @@ public:
 		{
 			if(indicestype == PHY_SHORT)
 			{
-				unsigned short * s_indices = (unsigned short *)(indexbase + face_index*indexstride);
+				unsigned short * s_indices = (unsigned short *)(indexbase) + face_index*3;
 				i0 = s_indices[0];
 				i1 = s_indices[1];
 				i2 = s_indices[2];
 			}
 			else
 			{
-				int * i_indices = (int *)(indexbase + face_index*indexstride);
+				int * i_indices = (int *)(indexbase) + face_index*3;
 				i0 = i_indices[0];
 				i1 = i_indices[1];
 				i2 = i_indices[2];
@@ -657,14 +649,14 @@ public:
 		{
 			if(type == PHY_DOUBLE)
 			{
-				double * dvertices = (double *)(vertexbase + vertex_index*stride);
+				double * dvertices = (double *)(vertexbase) + vertex_index*3;
 				vertex[0] = btScalar(dvertices[0]*m_scale[0]);
 				vertex[1] = btScalar(dvertices[1]*m_scale[1]);
 				vertex[2] = btScalar(dvertices[2]*m_scale[2]);
 			}
 			else
 			{
-				float * svertices = (float *)(vertexbase + vertex_index*stride);
+				float * svertices = (float *)(vertexbase) + vertex_index*3;
 				vertex[0] = svertices[0]*m_scale[0];
 				vertex[1] = svertices[1]*m_scale[1];
 				vertex[2] = svertices[2]*m_scale[2];

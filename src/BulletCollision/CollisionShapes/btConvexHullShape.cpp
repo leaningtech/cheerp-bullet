@@ -24,13 +24,11 @@ btConvexHullShape ::btConvexHullShape (const btScalar* points,int numPoints,int 
 	m_shapeType = CONVEX_HULL_SHAPE_PROXYTYPE;
 	m_unscaledPoints.resize(numPoints);
 
-	unsigned char* pointsAddress = (unsigned char*)points;
-
 	for (int i=0;i<numPoints;i++)
 	{
-		btScalar* point = (btScalar*)pointsAddress;
-		m_unscaledPoints[i] = btVector3(point[0], point[1], point[2]);
-		pointsAddress += stride;
+		m_unscaledPoints[i] = btVector3(points[i*stride/sizeof(btScalar)+0],
+						points[i*stride/sizeof(btScalar)+1],
+						points[i*stride/sizeof(btScalar)+2]);
 	}
 
 	recalcLocalAabb();

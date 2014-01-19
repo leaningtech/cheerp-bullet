@@ -107,9 +107,7 @@ void	btBvhTriangleMeshShape::performRaycast (btTriangleCallback* callback, const
 			const unsigned char *vertexbase;
 			int numverts;
 			PHY_ScalarType type;
-			int stride;
-			const unsigned char *indexbase;
-			int indexstride;
+			const unsigned int *indexbase;
 			int numfaces;
 			PHY_ScalarType indicestype;
 
@@ -117,30 +115,27 @@ void	btBvhTriangleMeshShape::performRaycast (btTriangleCallback* callback, const
 				&vertexbase,
 				numverts,
 				type,
-				stride,
 				&indexbase,
-				indexstride,
 				numfaces,
 				indicestype,
 				nodeSubPart);
 
-			unsigned int* gfxbase = (unsigned int*)(indexbase+nodeTriangleIndex*indexstride);
 			btAssert(indicestype==PHY_INTEGER||indicestype==PHY_SHORT);
 	
 			const btVector3& meshScaling = m_meshInterface->getScaling();
 			for (int j=2;j>=0;j--)
 			{
-				int graphicsindex = indicestype==PHY_SHORT?((unsigned short*)gfxbase)[j]:gfxbase[j];
+				int graphicsindex = indicestype==PHY_SHORT?((unsigned short*)indexbase)[j+nodeTriangleIndex*3]:indexbase[j+nodeTriangleIndex*3];
 				
 				if (type == PHY_FLOAT)
 				{
-					float* graphicsbase = (float*)(vertexbase+graphicsindex*stride);
+					float* graphicsbase = (float*)(vertexbase)+graphicsindex;
 					
 					m_triangle[j] = btVector3(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),graphicsbase[2]*meshScaling.getZ());		
 				}
 				else
 				{
-					double* graphicsbase = (double*)(vertexbase+graphicsindex*stride);
+					double* graphicsbase = (double*)(vertexbase)+graphicsindex;
 					
 					m_triangle[j] = btVector3(btScalar(graphicsbase[0])*meshScaling.getX(),btScalar(graphicsbase[1])*meshScaling.getY(),btScalar(graphicsbase[2])*meshScaling.getZ());		
 				}
@@ -176,9 +171,7 @@ void	btBvhTriangleMeshShape::performConvexcast (btTriangleCallback* callback, co
 			const unsigned char *vertexbase;
 			int numverts;
 			PHY_ScalarType type;
-			int stride;
-			const unsigned char *indexbase;
-			int indexstride;
+			const unsigned int *indexbase;
 			int numfaces;
 			PHY_ScalarType indicestype;
 
@@ -186,30 +179,27 @@ void	btBvhTriangleMeshShape::performConvexcast (btTriangleCallback* callback, co
 				&vertexbase,
 				numverts,
 				type,
-				stride,
 				&indexbase,
-				indexstride,
 				numfaces,
 				indicestype,
 				nodeSubPart);
 
-			unsigned int* gfxbase = (unsigned int*)(indexbase+nodeTriangleIndex*indexstride);
 			btAssert(indicestype==PHY_INTEGER||indicestype==PHY_SHORT);
 	
 			const btVector3& meshScaling = m_meshInterface->getScaling();
 			for (int j=2;j>=0;j--)
 			{
-				int graphicsindex = indicestype==PHY_SHORT?((unsigned short*)gfxbase)[j]:gfxbase[j];
+				int graphicsindex = indicestype==PHY_SHORT?((unsigned short*)indexbase)[j+nodeTriangleIndex*3]:indexbase[j+nodeTriangleIndex*3];
 
 				if (type == PHY_FLOAT)
 				{
-					float* graphicsbase = (float*)(vertexbase+graphicsindex*stride);
+					float* graphicsbase = (float*)(vertexbase)+graphicsindex;
 
 					m_triangle[j] = btVector3(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),graphicsbase[2]*meshScaling.getZ());		
 				}
 				else
 				{
-					double* graphicsbase = (double*)(vertexbase+graphicsindex*stride);
+					double* graphicsbase = (double*)(vertexbase)+graphicsindex;
 					
 					m_triangle[j] = btVector3(btScalar(graphicsbase[0])*meshScaling.getX(),btScalar(graphicsbase[1])*meshScaling.getY(),btScalar(graphicsbase[2])*meshScaling.getZ());		
 				}
@@ -256,9 +246,7 @@ void	btBvhTriangleMeshShape::processAllTriangles(btTriangleCallback* callback,co
 			const unsigned char *vertexbase;
 			int numverts;
 			PHY_ScalarType type;
-			int stride;
-			const unsigned char *indexbase;
-			int indexstride;
+			const unsigned int *indexbase;
 			int numfaces;
 			PHY_ScalarType indicestype;
 			
@@ -267,21 +255,18 @@ void	btBvhTriangleMeshShape::processAllTriangles(btTriangleCallback* callback,co
 				&vertexbase,
 				numverts,
 				type,
-				stride,
 				&indexbase,
-				indexstride,
 				numfaces,
 				indicestype,
 				nodeSubPart);
 
-			unsigned int* gfxbase = (unsigned int*)(indexbase+nodeTriangleIndex*indexstride);
 			btAssert(indicestype==PHY_INTEGER||indicestype==PHY_SHORT||indicestype==PHY_UCHAR);
 	
 			const btVector3& meshScaling = m_meshInterface->getScaling();
 			for (int j=2;j>=0;j--)
 			{
 				
-				int graphicsindex = indicestype==PHY_SHORT?((unsigned short*)gfxbase)[j]:indicestype==PHY_INTEGER?gfxbase[j]:((unsigned char*)gfxbase)[j];
+				int graphicsindex = indicestype==PHY_SHORT?((unsigned short*)indexbase)[j+nodeTriangleIndex*3]:indicestype==PHY_INTEGER?indexbase[j+nodeTriangleIndex*3]:((unsigned char*)indexbase)[j+nodeTriangleIndex*3];
 
 
 #ifdef DEBUG_TRIANGLE_MESH
@@ -289,7 +274,7 @@ void	btBvhTriangleMeshShape::processAllTriangles(btTriangleCallback* callback,co
 #endif //DEBUG_TRIANGLE_MESH
 				if (type == PHY_FLOAT)
 				{
-					float* graphicsbase = (float*)(vertexbase+graphicsindex*stride);
+					float* graphicsbase = (float*)(vertexbase)+graphicsindex;
 					
 					m_triangle[j] = btVector3(
 																		graphicsbase[0]*meshScaling.getX(),
@@ -298,7 +283,7 @@ void	btBvhTriangleMeshShape::processAllTriangles(btTriangleCallback* callback,co
 				}
 				else
 				{
-					double* graphicsbase = (double*)(vertexbase+graphicsindex*stride);
+					double* graphicsbase = (double*)(vertexbase)+graphicsindex;
 
 					m_triangle[j] = btVector3(
 						btScalar(graphicsbase[0])*meshScaling.getX(),

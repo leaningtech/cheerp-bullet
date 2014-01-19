@@ -20,21 +20,20 @@ subject to the following restrictions:
 
 #include "btTriangleIndexVertexArray.h"
 
+class btMaterial;
 
 ATTRIBUTE_ALIGNED16( struct)	btMaterialProperties
 {
     ///m_materialBase ==========> 2 btScalar values make up one material, friction then restitution
     int m_numMaterials;
-    const unsigned char * m_materialBase;
-    int m_materialStride;
+    btMaterial * m_materialBase;
     PHY_ScalarType m_materialType;
     ///m_numTriangles <=========== This exists in the btIndexedMesh object for the same subpart, but since we're
     ///                           padding the structure, it can be reproduced at no real cost
     ///m_triangleMaterials =====> 1 integer value makes up one entry
     ///                           eg: m_triangleMaterials[1] = 5; // This will set triangle 2 to use material 5
     int m_numTriangles; 
-    const unsigned char * m_triangleMaterialsBase;
-    int m_triangleMaterialStride;
+    const int * m_triangleMaterialsBase;
     ///m_triangleType <========== Automatically set in addMaterialProperties
     PHY_ScalarType m_triangleType;
 };
@@ -59,10 +58,10 @@ public:
 	{
 	}
 
-    btTriangleIndexVertexMaterialArray(int numTriangles,int* triangleIndexBase,int triangleIndexStride,
-        int numVertices,btScalar* vertexBase,int vertexStride,
-        int numMaterials, unsigned char* materialBase, int materialStride,
-        int* triangleMaterialsBase, int materialIndexStride);
+    btTriangleIndexVertexMaterialArray(int numTriangles,unsigned int* triangleIndexBase,
+        int numVertices,btScalar* vertexBase,
+        int numMaterials, btMaterial* materialBase,
+        int* triangleMaterialsBase);
 
     virtual ~btTriangleIndexVertexMaterialArray() {}
 
@@ -72,11 +71,11 @@ public:
         m_materials[m_materials.size()-1].m_triangleType = triangleType;
     }
 
-    virtual void getLockedMaterialBase(unsigned char **materialBase, int& numMaterials, PHY_ScalarType& materialType, int& materialStride,
-        unsigned char ** triangleMaterialBase, int& numTriangles, int& triangleMaterialStride, PHY_ScalarType& triangleType ,int subpart = 0);
+    virtual void getLockedMaterialBase(btMaterial **materialBase, int& numMaterials, PHY_ScalarType& materialType,
+        unsigned int ** triangleMaterialBase, int& numTriangles, PHY_ScalarType& triangleType ,int subpart = 0);
 
-    virtual void getLockedReadOnlyMaterialBase(const unsigned char **materialBase, int& numMaterials, PHY_ScalarType& materialType, int& materialStride,
-        const unsigned char ** triangleMaterialBase, int& numTriangles, int& triangleMaterialStride, PHY_ScalarType& triangleType, int subpart = 0);
+    virtual void getLockedReadOnlyMaterialBase(const btMaterial **materialBase, int& numMaterials, PHY_ScalarType& materialType,
+        const unsigned int ** triangleMaterialBase, int& numTriangles, PHY_ScalarType& triangleType, int subpart = 0);
 
 }
 ;

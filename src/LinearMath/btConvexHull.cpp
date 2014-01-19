@@ -704,7 +704,7 @@ HullError HullLibrary::CreateConvexHull(const HullDesc       &desc,           //
 
 	unsigned int ovcount;
 
-	bool ok = CleanupVertices(desc.mVcount,desc.mVertices, desc.mVertexStride, ovcount, &vertexSource[0], desc.mNormalEpsilon, scale ); // normalize point cloud, remove duplicates!
+	bool ok = CleanupVertices(desc.mVcount,desc.mVertices, ovcount, &vertexSource[0], desc.mNormalEpsilon, scale ); // normalize point cloud, remove duplicates!
 
 	if ( ok )
 	{
@@ -852,7 +852,6 @@ btScalar GetDist(btScalar px,btScalar py,btScalar pz,const btScalar *p2)
 
 bool  HullLibrary::CleanupVertices(unsigned int svcount,
 				   const btVector3 *svertices,
-				   unsigned int stride,
 				   unsigned int &vcount,       // output number of vertices
 				   btVector3 *vertices,                 // location to store the results.
 				   btScalar  normalepsilon,
@@ -879,21 +878,20 @@ bool  HullLibrary::CleanupVertices(unsigned int svcount,
 	btScalar bmin[3] = {  FLT_MAX,  FLT_MAX,  FLT_MAX };
 	btScalar bmax[3] = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
-	const char *vtx = (const char *) svertices;
-
 //	if ( 1 )
 	{
 		for (unsigned int i=0; i<svcount; i++)
 		{
-			const btScalar *p = (const btScalar *) vtx;
+			const btVector3 *p = &svertices[i];
 
-			vtx+=stride;
+			if ( p->x() < bmin[0] ) bmin[0] = p->x();
+			if ( p->x() > bmax[0] ) bmax[0] = p->x();
 
-			for (int j=0; j<3; j++)
-			{
-				if ( p[j] < bmin[j] ) bmin[j] = p[j];
-				if ( p[j] > bmax[j] ) bmax[j] = p[j];
-			}
+			if ( p->y() < bmin[1] ) bmin[1] = p->y();
+			if ( p->y() > bmax[1] ) bmax[1] = p->y();
+
+			if ( p->z() < bmin[2] ) bmin[2] = p->z();
+			if ( p->z() > bmax[2] ) bmax[2] = p->z();
 		}
 	}
 
@@ -971,12 +969,9 @@ bool  HullLibrary::CleanupVertices(unsigned int svcount,
 
 
 
-	vtx = (const char *) svertices;
-
 	for (unsigned int i=0; i<svcount; i++)
 	{
-		const btVector3 *p = (const btVector3 *)vtx;
-		vtx+=stride;
+		const btVector3 *p = &svertices[i];
 
 		btScalar px = p->getX();
 		btScalar py = p->getY();

@@ -55,9 +55,9 @@ ATTRIBUTE_ALIGNED16(class ) btStridingMeshInterface
 		/// in this way the mesh can be handled as chunks of memory with striding
 		/// very similar to OpenGL vertexarray support
 		/// make a call to unLockVertexBase when the read and write access is finished	
-		virtual void	getLockedVertexIndexBase(unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, int& stride,unsigned char **indexbase,int & indexstride,int& numfaces,PHY_ScalarType& indicestype,int subpart=0)=0;
+		virtual void	getLockedVertexIndexBase(unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, unsigned int **indexbase,int& numfaces,PHY_ScalarType& indicestype,int subpart=0)=0;
 		
-		virtual void	getLockedReadOnlyVertexIndexBase(const unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, int& stride,const unsigned char **indexbase,int & indexstride,int& numfaces,PHY_ScalarType& indicestype,int subpart=0) const=0;
+		virtual void	getLockedReadOnlyVertexIndexBase(const unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, const unsigned int **indexbase,int& numfaces,PHY_ScalarType& indicestype,int subpart=0) const=0;
 	
 		/// unLockVertexBase finishes the access to a subpart of the triangle mesh
 		/// make a call to unLockVertexBase when the read and write access (using getLockedVertexIndexBase) is finished

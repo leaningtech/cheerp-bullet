@@ -28,13 +28,9 @@ ATTRIBUTE_ALIGNED16( struct)	btIndexedMesh
 	BT_DECLARE_ALIGNED_ALLOCATOR();
 
    int                     m_numTriangles;
-   const unsigned char *   m_triangleIndexBase;
-   // Size in byte of the indices for one triangle (3*sizeof(index_type) if the indices are tightly packed)
-   int                     m_triangleIndexStride;
+   unsigned int *   m_triangleIndexBase;
    int                     m_numVertices;
-   const unsigned char *   m_vertexBase;
-   // Size of a vertex, in bytes
-   int                     m_vertexStride;
+   btScalar *   m_vertexBase;
 
    // The index type is set when adding an indexed mesh to the
    // btTriangleIndexVertexArray, do not set it manually
@@ -85,7 +81,7 @@ public:
 	virtual ~btTriangleIndexVertexArray();
 
 	//just to be backwards compatible
-	btTriangleIndexVertexArray(int numTriangles,int* triangleIndexBase,int triangleIndexStride,int numVertices,btScalar* vertexBase,int vertexStride);
+	btTriangleIndexVertexArray(int numTriangles,unsigned int* triangleIndexBase,int numVertices,btScalar* vertexBase);
 	
 	void	addIndexedMesh(const btIndexedMesh& mesh, PHY_ScalarType indexType = PHY_INTEGER)
 	{
@@ -94,9 +90,9 @@ public:
 	}
 	
 	
-	virtual void	getLockedVertexIndexBase(unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, int& vertexStride,unsigned char **indexbase,int & indexstride,int& numfaces,PHY_ScalarType& indicestype,int subpart=0);
+	virtual void	getLockedVertexIndexBase(unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, unsigned int **indexbase,int& numfaces,PHY_ScalarType& indicestype,int subpart=0);
 
-	virtual void	getLockedReadOnlyVertexIndexBase(const unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, int& vertexStride,const unsigned char **indexbase,int & indexstride,int& numfaces,PHY_ScalarType& indicestype,int subpart=0) const;
+	virtual void	getLockedReadOnlyVertexIndexBase(const unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, const unsigned int **indexbase,int& numfaces,PHY_ScalarType& indicestype,int subpart=0) const;
 
 	/// unLockVertexBase finishes the access to a subpart of the triangle mesh
 	/// make a call to unLockVertexBase when the read and write access (using getLockedVertexIndexBase) is finished

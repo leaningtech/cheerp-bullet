@@ -17,17 +17,16 @@ subject to the following restrictions:
 
 #include "btTriangleIndexVertexMaterialArray.h"
 
-btTriangleIndexVertexMaterialArray::btTriangleIndexVertexMaterialArray(int numTriangles,int* triangleIndexBase,int triangleIndexStride,
-                                   int numVertices,btScalar* vertexBase,int vertexStride,
-                                   int numMaterials, unsigned char* materialBase, int materialStride,
-                                   int* triangleMaterialsBase, int materialIndexStride) :
-btTriangleIndexVertexArray(numTriangles, triangleIndexBase, triangleIndexStride, numVertices, vertexBase, vertexStride)
+btTriangleIndexVertexMaterialArray::btTriangleIndexVertexMaterialArray(int numTriangles,unsigned int* triangleIndexBase,
+                                   int numVertices,btScalar* vertexBase,
+                                   int numMaterials, btMaterial* materialBase,
+                                   int* triangleMaterialsBase) :
+btTriangleIndexVertexArray(numTriangles, triangleIndexBase, numVertices, vertexBase)
 {
     btMaterialProperties mat;
 
     mat.m_numMaterials = numMaterials;
     mat.m_materialBase = materialBase;
-    mat.m_materialStride = materialStride;
 #ifdef BT_USE_DOUBLE_PRECISION
     mat.m_materialType = PHY_DOUBLE;
 #else
@@ -35,52 +34,47 @@ btTriangleIndexVertexArray(numTriangles, triangleIndexBase, triangleIndexStride,
 #endif
 
     mat.m_numTriangles = numTriangles;
-    mat.m_triangleMaterialsBase = (unsigned char *)triangleMaterialsBase;
-    mat.m_triangleMaterialStride = materialIndexStride;
+    mat.m_triangleMaterialsBase = (const int *)triangleMaterialsBase;
     mat.m_triangleType = PHY_INTEGER;
 
     addMaterialProperties(mat);
 }
 
 
-void btTriangleIndexVertexMaterialArray::getLockedMaterialBase(unsigned char **materialBase, int& numMaterials, PHY_ScalarType& materialType, int& materialStride,
-                                   unsigned char ** triangleMaterialBase, int& numTriangles, int& triangleMaterialStride, PHY_ScalarType& triangleType, int subpart)
+void btTriangleIndexVertexMaterialArray::getLockedMaterialBase(btMaterial **materialBase, int& numMaterials, PHY_ScalarType& materialType,
+                                   unsigned int ** triangleMaterialBase, int& numTriangles, PHY_ScalarType& triangleType, int subpart)
 {
     btAssert(subpart< getNumSubParts() );
 
     btMaterialProperties& mats = m_materials[subpart];
 
     numMaterials = mats.m_numMaterials;
-    (*materialBase) = (unsigned char *) mats.m_materialBase;
+    (*materialBase) = mats.m_materialBase;
 #ifdef BT_USE_DOUBLE_PRECISION
     materialType = PHY_DOUBLE;
 #else
     materialType = PHY_FLOAT;
 #endif
-    materialStride = mats.m_materialStride;
 
     numTriangles = mats.m_numTriangles;
-    (*triangleMaterialBase) = (unsigned char *)mats.m_triangleMaterialsBase;
-    triangleMaterialStride = mats.m_triangleMaterialStride;
+    (*triangleMaterialBase) = (unsigned int *)mats.m_triangleMaterialsBase;
     triangleType = mats.m_triangleType;
 }
 
-void btTriangleIndexVertexMaterialArray::getLockedReadOnlyMaterialBase(const unsigned char **materialBase, int& numMaterials, PHY_ScalarType& materialType, int& materialStride,
-                                           const unsigned char ** triangleMaterialBase, int& numTriangles, int& triangleMaterialStride, PHY_ScalarType& triangleType, int subpart)
+void btTriangleIndexVertexMaterialArray::getLockedReadOnlyMaterialBase(const btMaterial **materialBase, int& numMaterials, PHY_ScalarType& materialType,
+                                           const unsigned int ** triangleMaterialBase, int& numTriangles, PHY_ScalarType& triangleType, int subpart)
 {
     btMaterialProperties& mats = m_materials[subpart];
 
     numMaterials = mats.m_numMaterials;
-    (*materialBase) = (const unsigned char *) mats.m_materialBase;
+    (*materialBase) = mats.m_materialBase;
 #ifdef BT_USE_DOUBLE_PRECISION
     materialType = PHY_DOUBLE;
 #else
     materialType = PHY_FLOAT;
 #endif
-    materialStride = mats.m_materialStride;
 
     numTriangles = mats.m_numTriangles;
-    (*triangleMaterialBase) = (const unsigned char *)mats.m_triangleMaterialsBase;
-    triangleMaterialStride = mats.m_triangleMaterialStride;
+    (*triangleMaterialBase) = (const unsigned int *)mats.m_triangleMaterialsBase;
     triangleType = mats.m_triangleType;
 }

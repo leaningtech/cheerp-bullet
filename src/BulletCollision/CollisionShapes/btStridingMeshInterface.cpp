@@ -29,11 +29,10 @@ void	btStridingMeshInterface::InternalProcessAllTriangles(btInternalTriangleInde
 	int numtotalphysicsverts = 0;
 	int part,graphicssubparts = getNumSubParts();
 	const unsigned char * vertexbase;
-	const unsigned char * indexbase;
-	int indexstride;
+	const unsigned int * indexbase;
 	PHY_ScalarType type;
 	PHY_ScalarType gfxindextype;
-	int stride,numverts,numtriangles;
+	int numverts,numtriangles;
 	int gfxindex;
 	btVector3 triangle[3];
 
@@ -42,7 +41,7 @@ void	btStridingMeshInterface::InternalProcessAllTriangles(btInternalTriangleInde
 	///if the number of parts is big, the performance might drop due to the innerloop switch on indextype
 	for (part=0;part<graphicssubparts ;part++)
 	{
-		getLockedReadOnlyVertexIndexBase(&vertexbase,numverts,type,stride,&indexbase,indexstride,numtriangles,gfxindextype,part);
+		getLockedReadOnlyVertexIndexBase(&vertexbase,numverts,type,&indexbase,numtriangles,gfxindextype,part);
 		numtotalphysicsverts+=numtriangles*3; //upper bound
 
 		///unlike that developers want to pass in double-precision meshes in single-precision Bullet build
@@ -62,12 +61,12 @@ void	btStridingMeshInterface::InternalProcessAllTriangles(btInternalTriangleInde
 				 {
 					 for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 					 {
-						 unsigned int* tri_indices= (unsigned int*)(indexbase+gfxindex*indexstride);
-						 graphicsbase = (float*)(vertexbase+tri_indices[0]*stride);
+						 unsigned int* tri_indices= (unsigned int*)(indexbase)+gfxindex*3;
+						 graphicsbase = (float*)(vertexbase)+tri_indices[0];
 						 triangle[0].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),graphicsbase[2]*meshScaling.getZ());
-						 graphicsbase = (float*)(vertexbase+tri_indices[1]*stride);
+						 graphicsbase = (float*)(vertexbase)+tri_indices[1];
 						 triangle[1].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),	graphicsbase[2]*meshScaling.getZ());
-						 graphicsbase = (float*)(vertexbase+tri_indices[2]*stride);
+						 graphicsbase = (float*)(vertexbase)+tri_indices[2];
 						 triangle[2].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),	graphicsbase[2]*meshScaling.getZ());
 						 callback->internalProcessTriangleIndex(triangle,part,gfxindex);
 					 }
@@ -77,12 +76,12 @@ void	btStridingMeshInterface::InternalProcessAllTriangles(btInternalTriangleInde
 				 {
 					 for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 					 {
-						 unsigned short int* tri_indices= (unsigned short int*)(indexbase+gfxindex*indexstride);
-						 graphicsbase = (float*)(vertexbase+tri_indices[0]*stride);
+						 unsigned short int* tri_indices= (unsigned short int*)(indexbase)+gfxindex*3;
+						 graphicsbase = (float*)(vertexbase)+tri_indices[0];
 						 triangle[0].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),graphicsbase[2]*meshScaling.getZ());
-						 graphicsbase = (float*)(vertexbase+tri_indices[1]*stride);
+						 graphicsbase = (float*)(vertexbase)+tri_indices[1];
 						 triangle[1].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),	graphicsbase[2]*meshScaling.getZ());
-						 graphicsbase = (float*)(vertexbase+tri_indices[2]*stride);
+						 graphicsbase = (float*)(vertexbase)+tri_indices[2];
 						 triangle[2].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),	graphicsbase[2]*meshScaling.getZ());
 						 callback->internalProcessTriangleIndex(triangle,part,gfxindex);
 					 }
@@ -92,12 +91,12 @@ void	btStridingMeshInterface::InternalProcessAllTriangles(btInternalTriangleInde
 				 {
 					 for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 					 {
-						 unsigned char* tri_indices= (unsigned char*)(indexbase+gfxindex*indexstride);
-						 graphicsbase = (float*)(vertexbase+tri_indices[0]*stride);
+						 unsigned char* tri_indices= (unsigned char*)(indexbase)+gfxindex*3;
+						 graphicsbase = (float*)(vertexbase)+tri_indices[0];
 						 triangle[0].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),graphicsbase[2]*meshScaling.getZ());
-						 graphicsbase = (float*)(vertexbase+tri_indices[1]*stride);
+						 graphicsbase = (float*)(vertexbase)+tri_indices[1];
 						 triangle[1].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),	graphicsbase[2]*meshScaling.getZ());
-						 graphicsbase = (float*)(vertexbase+tri_indices[2]*stride);
+						 graphicsbase = (float*)(vertexbase)+tri_indices[2];
 						 triangle[2].setValue(graphicsbase[0]*meshScaling.getX(),graphicsbase[1]*meshScaling.getY(),	graphicsbase[2]*meshScaling.getZ());
 						 callback->internalProcessTriangleIndex(triangle,part,gfxindex);
 					 }
@@ -119,12 +118,12 @@ void	btStridingMeshInterface::InternalProcessAllTriangles(btInternalTriangleInde
 					{
 						for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 						{
-							unsigned int* tri_indices= (unsigned int*)(indexbase+gfxindex*indexstride);
-							graphicsbase = (double*)(vertexbase+tri_indices[0]*stride);
+							unsigned int* tri_indices= (unsigned int*)(indexbase)+gfxindex*3;
+							graphicsbase = (double*)(vertexbase)+tri_indices[0];
 							triangle[0].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),(btScalar)graphicsbase[2]*meshScaling.getZ());
-							graphicsbase = (double*)(vertexbase+tri_indices[1]*stride);
+							graphicsbase = (double*)(vertexbase)+tri_indices[1];
 							triangle[1].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),  (btScalar)graphicsbase[2]*meshScaling.getZ());
-							graphicsbase = (double*)(vertexbase+tri_indices[2]*stride);
+							graphicsbase = (double*)(vertexbase)+tri_indices[2];
 							triangle[2].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),  (btScalar)graphicsbase[2]*meshScaling.getZ());
 							callback->internalProcessTriangleIndex(triangle,part,gfxindex);
 						}
@@ -134,12 +133,12 @@ void	btStridingMeshInterface::InternalProcessAllTriangles(btInternalTriangleInde
 					{
 						for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 						{
-							unsigned short int* tri_indices= (unsigned short int*)(indexbase+gfxindex*indexstride);
-							graphicsbase = (double*)(vertexbase+tri_indices[0]*stride);
+							unsigned short int* tri_indices= (unsigned short int*)(indexbase)+gfxindex*3;
+							graphicsbase = (double*)(vertexbase)+tri_indices[0];
 							triangle[0].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),(btScalar)graphicsbase[2]*meshScaling.getZ());
-							graphicsbase = (double*)(vertexbase+tri_indices[1]*stride);
+							graphicsbase = (double*)(vertexbase)+tri_indices[1];
 							triangle[1].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),  (btScalar)graphicsbase[2]*meshScaling.getZ());
-							graphicsbase = (double*)(vertexbase+tri_indices[2]*stride);
+							graphicsbase = (double*)(vertexbase)+tri_indices[2];
 							triangle[2].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),  (btScalar)graphicsbase[2]*meshScaling.getZ());
 							callback->internalProcessTriangleIndex(triangle,part,gfxindex);
 						}
@@ -149,12 +148,12 @@ void	btStridingMeshInterface::InternalProcessAllTriangles(btInternalTriangleInde
 					{
 						for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 						{
-							unsigned char* tri_indices= (unsigned char*)(indexbase+gfxindex*indexstride);
-							graphicsbase = (double*)(vertexbase+tri_indices[0]*stride);
+							unsigned char* tri_indices= (unsigned char*)(indexbase)+gfxindex*3;
+							graphicsbase = (double*)(vertexbase)+tri_indices[0];
 							triangle[0].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),(btScalar)graphicsbase[2]*meshScaling.getZ());
-							graphicsbase = (double*)(vertexbase+tri_indices[1]*stride);
+							graphicsbase = (double*)(vertexbase)+tri_indices[1];
 							triangle[1].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),  (btScalar)graphicsbase[2]*meshScaling.getZ());
-							graphicsbase = (double*)(vertexbase+tri_indices[2]*stride);
+							graphicsbase = (double*)(vertexbase)+tri_indices[2];
 							triangle[2].setValue((btScalar)graphicsbase[0]*meshScaling.getX(),(btScalar)graphicsbase[1]*meshScaling.getY(),  (btScalar)graphicsbase[2]*meshScaling.getZ());
 							callback->internalProcessTriangleIndex(triangle,part,gfxindex);
 						}
@@ -234,11 +233,10 @@ const char*	btStridingMeshInterface::serialize(void* dataBuffer, btSerializer* s
 	//	int numtotalphysicsverts = 0;
 		int part,graphicssubparts = getNumSubParts();
 		const unsigned char * vertexbase;
-		const unsigned char * indexbase;
-		int indexstride;
+		const unsigned int * indexbase;
 		PHY_ScalarType type;
 		PHY_ScalarType gfxindextype;
-		int stride,numverts,numtriangles;
+		int numverts,numtriangles;
 		int gfxindex;
 	//	btVector3 triangle[3];
 
@@ -247,7 +245,7 @@ const char*	btStridingMeshInterface::serialize(void* dataBuffer, btSerializer* s
 		///if the number of parts is big, the performance might drop due to the innerloop switch on indextype
 		for (part=0;part<graphicssubparts ;part++,memPtr++)
 		{
-			getLockedReadOnlyVertexIndexBase(&vertexbase,numverts,type,stride,&indexbase,indexstride,numtriangles,gfxindextype,part);
+			getLockedReadOnlyVertexIndexBase(&vertexbase,numverts,type,&indexbase,numtriangles,gfxindextype,part);
 			memPtr->m_numTriangles = numtriangles;//indices = 3*numtriangles
 			memPtr->m_numVertices = numverts;
 			memPtr->m_indices16 = 0;
@@ -271,7 +269,7 @@ const char*	btStridingMeshInterface::serialize(void* dataBuffer, btSerializer* s
 						memPtr->m_indices32 = (btIntIndexData*)serializer->getUniquePointer(tmpIndices);
 						for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 						{
-							unsigned int* tri_indices= (unsigned int*)(indexbase+gfxindex*indexstride);
+							unsigned int* tri_indices= (unsigned int*)(indexbase)+gfxindex*3;
 							tmpIndices[gfxindex*3].m_value = tri_indices[0];
 							tmpIndices[gfxindex*3+1].m_value = tri_indices[1];
 							tmpIndices[gfxindex*3+2].m_value = tri_indices[2];
@@ -289,7 +287,7 @@ const char*	btStridingMeshInterface::serialize(void* dataBuffer, btSerializer* s
 						memPtr->m_3indices16 = (btShortIntIndexTripletData*) serializer->getUniquePointer(tmpIndices);
 						for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 						{
-							unsigned short int* tri_indices= (unsigned short int*)(indexbase+gfxindex*indexstride);
+							unsigned short int* tri_indices= (unsigned short int*)(indexbase)+gfxindex*3;
 							tmpIndices[gfxindex].m_values[0] = tri_indices[0];
 							tmpIndices[gfxindex].m_values[1] = tri_indices[1];
 							tmpIndices[gfxindex].m_values[2] = tri_indices[2];
@@ -307,7 +305,7 @@ const char*	btStridingMeshInterface::serialize(void* dataBuffer, btSerializer* s
 						memPtr->m_3indices8 = (btCharIndexTripletData*) serializer->getUniquePointer(tmpIndices);
 						for (gfxindex=0;gfxindex<numtriangles;gfxindex++)
 						{
-							unsigned char* tri_indices= (unsigned char*)(indexbase+gfxindex*indexstride);
+							unsigned char* tri_indices= (unsigned char*)(indexbase)+gfxindex*3;
 							tmpIndices[gfxindex].m_values[0] = tri_indices[0];
 							tmpIndices[gfxindex].m_values[1] = tri_indices[1];
 							tmpIndices[gfxindex].m_values[2] = tri_indices[2];
@@ -336,7 +334,7 @@ const char*	btStridingMeshInterface::serialize(void* dataBuffer, btSerializer* s
 					 memPtr->m_vertices3f = (btVector3FloatData *)serializer->getUniquePointer(tmpVertices);
 					 for (int i=0;i<numverts;i++)
 					 {
-						 graphicsbase = (float*)(vertexbase+i*stride);
+						 graphicsbase = (float*)(vertexbase)+i*3;
 						 tmpVertices[i].m_floats[0] = graphicsbase[0];
 						 tmpVertices[i].m_floats[1] = graphicsbase[1];
 						 tmpVertices[i].m_floats[2] = graphicsbase[2];
@@ -355,7 +353,7 @@ const char*	btStridingMeshInterface::serialize(void* dataBuffer, btSerializer* s
 						memPtr->m_vertices3d = (btVector3DoubleData *) serializer->getUniquePointer(tmpVertices);
 						for (int i=0;i<numverts;i++)
 					 {
-						 double* graphicsbase = (double*)(vertexbase+i*stride);//for now convert to float, might leave it at double
+						 double* graphicsbase = (double*)(vertexbase)+i*3;//for now convert to float, might leave it at double
 						 tmpVertices[i].m_floats[0] = graphicsbase[0];
 						 tmpVertices[i].m_floats[1] = graphicsbase[1];
 						 tmpVertices[i].m_floats[2] = graphicsbase[2];

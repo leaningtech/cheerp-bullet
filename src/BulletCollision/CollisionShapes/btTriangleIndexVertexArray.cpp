@@ -15,17 +15,15 @@ subject to the following restrictions:
 
 #include "btTriangleIndexVertexArray.h"
 
-btTriangleIndexVertexArray::btTriangleIndexVertexArray(int numTriangles,int* triangleIndexBase,int triangleIndexStride,int numVertices,btScalar* vertexBase,int vertexStride)
+btTriangleIndexVertexArray::btTriangleIndexVertexArray(int numTriangles,unsigned int* triangleIndexBase,int numVertices,btScalar* vertexBase)
 : m_hasAabb(0)
 {
 	btIndexedMesh mesh;
 
 	mesh.m_numTriangles = numTriangles;
-	mesh.m_triangleIndexBase = (const unsigned char *)triangleIndexBase;
-	mesh.m_triangleIndexStride = triangleIndexStride;
+	mesh.m_triangleIndexBase = triangleIndexBase;
 	mesh.m_numVertices = numVertices;
-	mesh.m_vertexBase = (const unsigned char *)vertexBase;
-	mesh.m_vertexStride = vertexStride;
+	mesh.m_vertexBase = vertexBase;
 
 	addIndexedMesh(mesh);
 
@@ -36,7 +34,7 @@ btTriangleIndexVertexArray::~btTriangleIndexVertexArray()
 
 }
 
-void	btTriangleIndexVertexArray::getLockedVertexIndexBase(unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, int& vertexStride,unsigned char **indexbase,int & indexstride,int& numfaces,PHY_ScalarType& indicestype,int subpart)
+void	btTriangleIndexVertexArray::getLockedVertexIndexBase(unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, unsigned int **indexbase,int& numfaces,PHY_ScalarType& indicestype,int subpart)
 {
 	btAssert(subpart< getNumSubParts() );
 
@@ -47,16 +45,13 @@ void	btTriangleIndexVertexArray::getLockedVertexIndexBase(unsigned char **vertex
 
    type = mesh.m_vertexType;
 
-	vertexStride = mesh.m_vertexStride;
-
 	numfaces = mesh.m_numTriangles;
 
-	(*indexbase) = (unsigned char *)mesh.m_triangleIndexBase;
-	indexstride = mesh.m_triangleIndexStride;
+	(*indexbase) = (unsigned int *)mesh.m_triangleIndexBase;
 	indicestype = mesh.m_indexType;
 }
 
-void	btTriangleIndexVertexArray::getLockedReadOnlyVertexIndexBase(const unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, int& vertexStride,const unsigned char **indexbase,int & indexstride,int& numfaces,PHY_ScalarType& indicestype,int subpart) const
+void	btTriangleIndexVertexArray::getLockedReadOnlyVertexIndexBase(const unsigned char **vertexbase, int& numverts,PHY_ScalarType& type, const unsigned int **indexbase,int& numfaces,PHY_ScalarType& indicestype,int subpart) const
 {
 	const btIndexedMesh& mesh = m_indexedMeshes[subpart];
 
@@ -65,11 +60,8 @@ void	btTriangleIndexVertexArray::getLockedReadOnlyVertexIndexBase(const unsigned
 
    type = mesh.m_vertexType;
    
-	vertexStride = mesh.m_vertexStride;
-
 	numfaces = mesh.m_numTriangles;
-	(*indexbase) = (const unsigned char *)mesh.m_triangleIndexBase;
-	indexstride = mesh.m_triangleIndexStride;
+	(*indexbase) = (const unsigned int *)mesh.m_triangleIndexBase;
 	indicestype = mesh.m_indexType;
 }
 
