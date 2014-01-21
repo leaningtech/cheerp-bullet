@@ -239,7 +239,7 @@ btBroadphasePair* btHashedOverlappingPairCache::internalAddPair(btBroadphaseProx
 		}*/
 	int count = m_overlappingPairArray.size();
 	int oldCapacity = m_overlappingPairArray.capacity();
-	void* mem = &m_overlappingPairArray.expandNonInitializing();
+	btBroadphasePair* mem = &m_overlappingPairArray.expandNonInitializing();
 
 	//this is where we add an actual pair, so also call the 'ghost'
 	if (m_ghostPairCallback)
@@ -466,7 +466,7 @@ btBroadphasePair*	btSortedOverlappingPairCache::addOverlappingPair(btBroadphaseP
 	if (!needsBroadphaseCollision(proxy0,proxy1))
 		return 0;
 	
-	void* mem = &m_overlappingPairArray.expandNonInitializing();
+	btBroadphasePair* mem = &m_overlappingPairArray.expandNonInitializing();
 	btBroadphasePair* pair = new (mem) btBroadphasePair(*proxy0,*proxy1);
 	
 	gOverlappingPairs++;
