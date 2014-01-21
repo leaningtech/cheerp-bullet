@@ -1258,11 +1258,6 @@ inline void		btDbvt::collideTU(	const btDbvtNode* root,
 #undef DBVT_PREFIX
 #undef DBVT_IPOLICY
 #undef DBVT_CHECKTYPE
-#undef DBVT_IMPL_GENERIC
-#undef DBVT_IMPL_SSE
 #undef DBVT_USE_INTRINSIC_SSE
-#undef DBVT_SELECT_IMPL
-#undef DBVT_MERGE_IMPL
-#undef DBVT_INT0_IMPL
 
 #endif
