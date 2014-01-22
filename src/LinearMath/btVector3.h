@@ -123,12 +123,12 @@ public:
    * @param y Y value 
    * @param z Z value 
    */
-	SIMD_FORCE_INLINE btVector3(const btScalar& _x, const btScalar& _y, const btScalar& _z)
+	SIMD_FORCE_INLINE btVector3(btScalar _x, btScalar _y, btScalar _z, btScalar _w = 0.0)
 	{
 		m_floats[0] = _x;
 		m_floats[1] = _y;
 		m_floats[2] = _z;
-		m_floats[3] = btScalar(0.f);
+		m_floats[3] = _w;
 	}
 
 #if (defined (BT_USE_SSE_IN_API) && defined (BT_USE_SSE) )|| defined (BT_USE_NEON)
@@ -548,6 +548,7 @@ public:
 		SIMD_FORCE_INLINE const btScalar& getY() const { return m_floats[1]; }
   /**@brief Return the z value */
 		SIMD_FORCE_INLINE const btScalar& getZ() const { return m_floats[2]; }
+		SIMD_FORCE_INLINE const btScalar& getW() const { return m_floats[3]; }
   /**@brief Set the x value */
 		SIMD_FORCE_INLINE void	setX(btScalar _x) { m_floats[0] = _x;};
   /**@brief Set the y value */
