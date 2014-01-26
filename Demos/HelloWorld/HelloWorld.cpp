@@ -19,7 +19,11 @@ subject to the following restrictions:
 
 /// This is a Hello World program for running a basic Bullet physics simulation
 
-int main(int argc, char** argv)
+#ifdef __DUETTO__
+void webMain()
+#else
+int main()
+#endif
 {
 	///-----includes_end-----
 
