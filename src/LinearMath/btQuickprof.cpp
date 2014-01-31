@@ -13,6 +13,11 @@
 // Credits: The Clock class was inspired by the Timer classes in 
 // Ogre (www.ogre3d.org).
 
+#ifdef __DUETTO__
+#include <duetto/client.h>
+#include <duetto/clientlib.h>
+#endif
+
 #include "btQuickprof.h"
 
 #ifndef BT_NO_PROFILE
@@ -65,6 +70,8 @@ struct btClockData
 #else
 #ifdef __CELLOS_LV2__
 	uint64_t	mStartTime;
+#elif __DUETTO__
+	double		mStartTime;
 #else
 	struct timeval mStartTime;
 #endif
@@ -115,6 +122,8 @@ void btClock::reset()
 	//__asm __volatile__( "mftb %0" : "=r" (newTime) : : "memory");
 	SYS_TIMEBASE_GET( newTime );
 	m_data->mStartTime = newTime;
+#elif __DUETTO__
+	m_data->mStartTime = client::Date.now();
 #else
 	gettimeofday(&m_data->mStartTime, 0);
 #endif
@@ -167,6 +176,9 @@ unsigned long int btClock::getTimeMilliseconds()
 		//__asm __volatile__( "mftb %0" : "=r" (newTime) : : "memory");
 
 		return (unsigned long int)((double(newTime-m_data->mStartTime)) / dFreq);
+#elif __DUETTO__
+		double currentTime = client::Date.now();
+		return currentTime - m_data->mStartTime;
 #else
 
 		struct timeval currentTime;
@@ -225,6 +237,10 @@ unsigned long int btClock::getTimeMicroseconds()
 		SYS_TIMEBASE_GET( newTime );
 
 		return (unsigned long int)((double(newTime-m_data->mStartTime)) / dFreq);
+#elif __DUETTO__
+		// We don't have microsecond timing using Date
+		double currentTime = client::Date.now();
+		return (currentTime - m_data->mStartTime) * 1000;
 #else
 
 		struct timeval currentTime;
