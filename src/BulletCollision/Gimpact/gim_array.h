@@ -56,7 +56,7 @@ public:
 	{
 	    m_allocated_size = 0;
 		if(m_data==NULL) return;
-		gim_free(m_data);
+		free(m_data);
 		m_data = NULL;
 	}
 
@@ -70,11 +70,12 @@ public:
 
 		if(m_size>0)
 		{
-            m_data = (T*)gim_realloc(m_data,m_size*sizeof(T),newsize*sizeof(T));
+			free(m_data);
+			m_data = (T*)malloc(newsize*sizeof(T));
 		}
 		else
 		{
-		    m_data = (T*)gim_alloc(newsize*sizeof(T));
+			m_data = (T*)malloc(newsize*sizeof(T));
 		}
 		m_allocated_size = newsize;
 		return true;
