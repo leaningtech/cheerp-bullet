@@ -88,26 +88,10 @@ btDefaultCollisionConfiguration::btDefaultCollisionConfiguration(const btDefault
 	int	collisionAlgorithmMaxElementSize = btMax(maxSize,constructionInfo.m_customCollisionAlgorithmMaxElementSize);
 	collisionAlgorithmMaxElementSize = btMax(collisionAlgorithmMaxElementSize,maxSize2);
 	collisionAlgorithmMaxElementSize = btMax(collisionAlgorithmMaxElementSize,maxSize3);
-
-	if (constructionInfo.m_stackAlloc)
-	{
-		m_ownsStackAllocator = false;
-		this->m_stackAlloc = constructionInfo.m_stackAlloc;
-	} else
-	{
-		m_ownsStackAllocator = true;
-		m_stackAlloc = new btStackAlloc(constructionInfo.m_defaultStackAllocatorSize);
-	}
 }
 
 btDefaultCollisionConfiguration::~btDefaultCollisionConfiguration()
 {
-	if (m_ownsStackAllocator)
-	{
-		m_stackAlloc->destroy();
-		delete m_stackAlloc;
-	}
-
 	delete 	m_convexConvexCreateFunc;
 
 	delete  m_convexConcaveCreateFunc;

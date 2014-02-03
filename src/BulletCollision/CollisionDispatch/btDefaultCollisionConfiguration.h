@@ -22,7 +22,6 @@ class btConvexPenetrationDepthSolver;
 
 struct	btDefaultCollisionConstructionInfo
 {
-	btStackAlloc*		m_stackAlloc;
 	btPoolAllocator*	m_persistentManifoldPool;
 	btPoolAllocator*	m_collisionAlgorithmPool;
 	int					m_defaultMaxPersistentManifoldPoolSize;
@@ -32,13 +31,12 @@ struct	btDefaultCollisionConstructionInfo
 	int					m_useEpaPenetrationAlgorithm;
 
 	btDefaultCollisionConstructionInfo()
-		:m_stackAlloc(0),
+		:
 		m_persistentManifoldPool(0),
 		m_collisionAlgorithmPool(0),
 		m_defaultMaxPersistentManifoldPoolSize(4096),
 		m_defaultMaxCollisionAlgorithmPoolSize(4096),
 		m_customCollisionAlgorithmMaxElementSize(0),
-		m_defaultStackAllocatorSize(0),
 		m_useEpaPenetrationAlgorithm(true)
 	{
 	}

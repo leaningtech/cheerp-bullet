@@ -29,7 +29,7 @@ struct btBlock
 	btBlock*			previous;
 	unsigned char*		address;
 };
-
+#ifndef __DUETTO__
 ///The StackAlloc class provides some fast stack-based memory allocator (LIFO last-in first-out)
 class btStackAlloc
 {
@@ -112,5 +112,6 @@ private:
 	btBlock*	current;
 	bool		ischild;
 };
+#endif
 
 #endif //BT_STACK_ALLOC
