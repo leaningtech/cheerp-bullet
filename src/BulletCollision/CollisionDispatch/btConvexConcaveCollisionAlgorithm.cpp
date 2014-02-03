@@ -139,9 +139,7 @@ void btConvexTriangleCallback::processTriangle(btVector3* triangle,int partId, i
 		}
 		
 
-
-		colAlgo->~btCollisionAlgorithm();
-		ci.m_dispatcher1->freeCollisionAlgorithm(colAlgo);
+		delete colAlgo;
 	}
 
 }

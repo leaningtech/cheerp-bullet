@@ -67,13 +67,12 @@ public:
 		
 		virtual	btCollisionAlgorithm* CreateCollisionAlgorithm(btCollisionAlgorithmConstructionInfo& ci, const btCollisionObjectWrapper* body0Wrap,const btCollisionObjectWrapper* body1Wrap)
 		{
-			void* mem = ci.m_dispatcher1->allocateCollisionAlgorithm(sizeof(btConvexPlaneCollisionAlgorithm));
 			if (!m_swapped)
 			{
-				return new(mem) btConvexPlaneCollisionAlgorithm(0,ci,body0Wrap,body1Wrap,false,m_numPerturbationIterations,m_minimumPointsPerturbationThreshold);
+				return new btConvexPlaneCollisionAlgorithm(0,ci,body0Wrap,body1Wrap,false,m_numPerturbationIterations,m_minimumPointsPerturbationThreshold);
 			} else
 			{
-				return new(mem) btConvexPlaneCollisionAlgorithm(0,ci,body0Wrap,body1Wrap,true,m_numPerturbationIterations,m_minimumPointsPerturbationThreshold);
+				return new btConvexPlaneCollisionAlgorithm(0,ci,body0Wrap,body1Wrap,true,m_numPerturbationIterations,m_minimumPointsPerturbationThreshold);
 			}
 		}
 	};

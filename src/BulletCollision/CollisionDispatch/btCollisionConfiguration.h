@@ -34,10 +34,6 @@ public:
 	}
 
 	///memory pools
-	virtual btPoolAllocator* getPersistentManifoldPool() = 0;
-
-	virtual btPoolAllocator* getCollisionAlgorithmPool() = 0;
-
 	virtual btStackAlloc*	getStackAllocator() = 0;
 
 	virtual btCollisionAlgorithmCreateFunc* getCollisionAlgorithmCreateFunc(int proxyType0,int proxyType1) =0;

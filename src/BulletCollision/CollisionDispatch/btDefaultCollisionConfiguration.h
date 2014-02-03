@@ -59,13 +59,6 @@ protected:
 	btStackAlloc*	m_stackAlloc;
 	bool	m_ownsStackAllocator;
 
-	btPoolAllocator*	m_persistentManifoldPool;
-	bool	m_ownsPersistentManifoldPool;
-
-
-	btPoolAllocator*	m_collisionAlgorithmPool;
-	bool	m_ownsCollisionAlgorithmPool;
-
 	//default simplex/penetration depth solvers
 	btVoronoiSimplexSolver*	m_simplexSolver;
 	btConvexPenetrationDepthSolver*	m_pdSolver;
@@ -93,17 +86,6 @@ public:
 	btDefaultCollisionConfiguration(const btDefaultCollisionConstructionInfo& constructionInfo = btDefaultCollisionConstructionInfo());
 
 	virtual ~btDefaultCollisionConfiguration();
-
-		///memory pools
-	virtual btPoolAllocator* getPersistentManifoldPool()
-	{
-		return m_persistentManifoldPool;
-	}
-
-	virtual btPoolAllocator* getCollisionAlgorithmPool()
-	{
-		return m_collisionAlgorithmPool;
-	}
 
 	virtual btStackAlloc*	getStackAllocator()
 	{

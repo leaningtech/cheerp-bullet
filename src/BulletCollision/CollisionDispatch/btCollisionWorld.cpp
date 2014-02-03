@@ -1146,8 +1146,7 @@ struct btSingleContactCallback : public btBroadphaseAabbCallback
 				
 				algorithm->processCollision(&ob0,&ob1, m_world->getDispatchInfo(),&contactPointResult);
 
-				algorithm->~btCollisionAlgorithm();
-				m_world->getDispatcher()->freeCollisionAlgorithm(algorithm);
+				delete algorithm;
 			}
 		}
 		return true;
@@ -1181,8 +1180,7 @@ void	btCollisionWorld::contactPairTest(btCollisionObject* colObjA, btCollisionOb
 		//discrete collision detection query
 		algorithm->processCollision(&obA,&obB, getDispatchInfo(),&contactPointResult);
 
-		algorithm->~btCollisionAlgorithm();
-		getDispatcher()->freeCollisionAlgorithm(algorithm);
+		delete algorithm;
 	}
 
 }

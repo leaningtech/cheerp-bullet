@@ -56,8 +56,7 @@ void	btHashedOverlappingPairCache::cleanOverlappingPair(btBroadphasePair& pair,b
 	if (pair.m_algorithm)
 	{
 		{
-			pair.m_algorithm->~btCollisionAlgorithm();
-			dispatcher->freeCollisionAlgorithm(pair.m_algorithm);
+			delete pair.m_algorithm;
 			pair.m_algorithm=0;
 		}
 	}
@@ -557,8 +556,7 @@ void	btSortedOverlappingPairCache::cleanOverlappingPair(btBroadphasePair& pair,b
 	if (pair.m_algorithm)
 	{
 		{
-			pair.m_algorithm->~btCollisionAlgorithm();
-			dispatcher->freeCollisionAlgorithm(pair.m_algorithm);
+			delete pair.m_algorithm;
 			pair.m_algorithm=0;
 			gRemovePairs--;
 		}

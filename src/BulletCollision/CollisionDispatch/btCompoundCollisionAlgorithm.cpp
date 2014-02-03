@@ -75,8 +75,7 @@ void	btCompoundCollisionAlgorithm::removeChildAlgorithms()
 	{
 		if (m_childCollisionAlgorithms[i])
 		{
-			m_childCollisionAlgorithms[i]->~btCollisionAlgorithm();
-			m_dispatcher->freeCollisionAlgorithm(m_childCollisionAlgorithms[i]);
+			delete m_childCollisionAlgorithms[i];
 		}
 	}
 }
@@ -303,8 +302,7 @@ void btCompoundCollisionAlgorithm::processCollision (const btCollisionObjectWrap
 
 				if (!TestAabbAgainstAabb2(aabbMin0,aabbMax0,aabbMin1,aabbMax1))
 				{
-					m_childCollisionAlgorithms[i]->~btCollisionAlgorithm();
-					m_dispatcher->freeCollisionAlgorithm(m_childCollisionAlgorithms[i]);
+					delete m_childCollisionAlgorithms[i];
 					m_childCollisionAlgorithms[i] = 0;
 				}
 			}

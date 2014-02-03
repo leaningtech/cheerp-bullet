@@ -95,15 +95,6 @@ public:
 	virtual btPersistentManifold* getManifoldByIndexInternal(int index) = 0;
 
 	virtual	btPersistentManifold**	getInternalManifoldPointer() = 0;
-
-	virtual	btPoolAllocator*	getInternalManifoldPool() = 0;
-
-	virtual	const btPoolAllocator*	getInternalManifoldPool() const = 0;
-
-	virtual	void* allocateCollisionAlgorithm(int size)  = 0;
-
-	virtual	void freeCollisionAlgorithm(void* ptr) = 0;
-
 };
 
 

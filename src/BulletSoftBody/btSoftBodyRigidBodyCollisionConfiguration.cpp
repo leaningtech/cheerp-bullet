@@ -38,31 +38,6 @@ btSoftBodyRigidBodyCollisionConfiguration::btSoftBodyRigidBodyCollisionConfigura
 	m_swappedSoftRigidConcaveCreateFunc = new btSoftBodyConcaveCollisionAlgorithm::SwappedCreateFunc;
 	m_swappedSoftRigidConcaveCreateFunc->m_swapped=true;
 #endif
-
-	//replace pool by a new one, with potential larger size
-
-	if (m_ownsCollisionAlgorithmPool && m_collisionAlgorithmPool)
-	{
-		int curElemSize = m_collisionAlgorithmPool->getElementSize();
-		///calculate maximum element size, big enough to fit any collision algorithm in the memory pool
-
-
-		int maxSize0 = sizeof(btSoftSoftCollisionAlgorithm);
-		int maxSize1 = sizeof(btSoftRigidCollisionAlgorithm);
-		int maxSize2 = sizeof(btSoftBodyConcaveCollisionAlgorithm);
-
-		int	collisionAlgorithmMaxElementSize = btMax(maxSize0,maxSize1);
-		collisionAlgorithmMaxElementSize = btMax(collisionAlgorithmMaxElementSize,maxSize2);
-		
-		if (collisionAlgorithmMaxElementSize > curElemSize)
-		{
-			m_collisionAlgorithmPool->~btPoolAllocator();
-			btAlignedFree(m_collisionAlgorithmPool);
-			void* mem = btAlignedAlloc(sizeof(btPoolAllocator),16);
-			m_collisionAlgorithmPool = new(mem) btPoolAllocator(collisionAlgorithmMaxElementSize,constructionInfo.m_defaultMaxCollisionAlgorithmPoolSize);
-		}
-	}
-
 }
 
 btSoftBodyRigidBodyCollisionConfiguration::~btSoftBodyRigidBodyCollisionConfiguration()

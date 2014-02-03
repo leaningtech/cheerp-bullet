@@ -124,8 +124,7 @@ void btSoftBodyTriangleCallback::processTriangle(btVector3* triangle,int partId,
 		btCollisionAlgorithm* colAlgo = ci.m_dispatcher1->findAlgorithm(&softBody,&triBody,0);//m_manifoldPtr);
 
 		colAlgo->processCollision(&softBody,&triBody,*m_dispatchInfoPtr,m_resultOut);
-		colAlgo->~btCollisionAlgorithm();
-		ci.m_dispatcher1->freeCollisionAlgorithm(colAlgo);
+		delete colAlgo;
 		
 		return;
 	}
@@ -167,8 +166,7 @@ void btSoftBodyTriangleCallback::processTriangle(btVector3* triangle,int partId,
 		btCollisionAlgorithm* colAlgo = ci.m_dispatcher1->findAlgorithm(&softBody,&triBody,0);//m_manifoldPtr);
 
 		colAlgo->processCollision(&softBody,&triBody,*m_dispatchInfoPtr,m_resultOut);
-		colAlgo->~btCollisionAlgorithm();
-		ci.m_dispatcher1->freeCollisionAlgorithm(colAlgo);
+		delete colAlgo;
 
 		triIndex.m_childShape = tm;
 		m_shapeCache.insert(triKey,triIndex);

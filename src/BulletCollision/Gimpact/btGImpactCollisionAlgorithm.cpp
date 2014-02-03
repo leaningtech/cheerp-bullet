@@ -242,8 +242,7 @@ void btGImpactCollisionAlgorithm::shape_vs_shape_collision(
 
 		algor->processCollision(&ob0,&ob1,*m_dispatchInfo,m_resultOut);
 
-		algor->~btCollisionAlgorithm();
-		m_dispatcher->freeCollisionAlgorithm(algor);
+		delete algor;
 	}
 
 }

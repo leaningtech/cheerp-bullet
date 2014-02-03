@@ -53,10 +53,6 @@ protected:
 
 	btNearCallback		m_nearCallback;
 	
-	btPoolAllocator*	m_collisionAlgorithmPoolAllocator;
-
-	btPoolAllocator*	m_persistentManifoldPoolAllocator;
-
 	btCollisionAlgorithmCreateFunc* m_doubleDispatch[MAX_BROADPHASE_COLLISION_TYPES][MAX_BROADPHASE_COLLISION_TYPES];
 
 	btCollisionConfiguration*	m_collisionConfiguration;
@@ -136,10 +132,6 @@ public:
 	//by default, Bullet will use this near callback
 	static void  defaultNearCallback(btBroadphasePair& collisionPair, btCollisionDispatcher& dispatcher, const btDispatcherInfo& dispatchInfo);
 
-	virtual	void* allocateCollisionAlgorithm(int size);
-
-	virtual	void freeCollisionAlgorithm(void* ptr);
-
 	btCollisionConfiguration*	getCollisionConfiguration()
 	{
 		return m_collisionConfiguration;
@@ -154,17 +146,6 @@ public:
 	{
 		m_collisionConfiguration = config;
 	}
-
-	virtual	btPoolAllocator*	getInternalManifoldPool()
-	{
-		return m_persistentManifoldPoolAllocator;
-	}
-
-	virtual	const btPoolAllocator*	getInternalManifoldPool() const
-	{
-		return m_persistentManifoldPoolAllocator;
-	}
-
 };
 
 #endif //BT_COLLISION__DISPATCHER_H

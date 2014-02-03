@@ -21,7 +21,7 @@ subject to the following restrictions:
 #include "btGenericPoolAllocator.h"
 
 
-
+#ifndef __DUETTO__
 /// *************** btGenericMemoryPool ******************///////////
 
 size_t btGenericMemoryPool::allocate_from_free_nodes(size_t num_elements)
@@ -243,6 +243,7 @@ bool btGenericPoolAllocator::freeMemory(void * pointer)
 
 	return failback_free(pointer);
 }
+#endif
 
 /// ************** STANDARD ALLOCATOR ***************************///
 
