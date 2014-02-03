@@ -37,8 +37,7 @@ btSoftRigidDynamicsWorld::btSoftRigidDynamicsWorld(
 {
 	if( !m_softBodySolver )
 	{
-		void* ptr = btAlignedAlloc(sizeof(btDefaultSoftBodySolver),16);
-		m_softBodySolver = new(ptr) btDefaultSoftBodySolver();
+		m_softBodySolver = new btDefaultSoftBodySolver();
 		m_ownsSolver = true;
 	}
 
@@ -66,8 +65,7 @@ btSoftRigidDynamicsWorld::~btSoftRigidDynamicsWorld()
 {
 	if (m_ownsSolver)
 	{
-		m_softBodySolver->~btSoftBodySolver();
-		btAlignedFree(m_softBodySolver);
+		delete m_softBodySolver;
 	}
 }
 

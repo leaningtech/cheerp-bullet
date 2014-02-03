@@ -83,7 +83,6 @@ protected:
 	BP_FP_INT_TYPE m_firstFreeHandle;		// free handles list
 
 	Edge* m_pEdges[3];						// edge arrays for the 3 axes (each array has m_maxHandles * 2 + 2 sentinel entries)
-	void* m_pEdgesRawPtr[3];
 
 	btOverlappingPairCache* m_pairCache;
 
@@ -362,15 +361,14 @@ m_raycastAccelerator(0)
 
 	if (!m_pairCache)
 	{
-		void* ptr = btAlignedAlloc(sizeof(btHashedOverlappingPairCache),16);
-		m_pairCache = new(ptr) btHashedOverlappingPairCache();
+		m_pairCache = new btHashedOverlappingPairCache();
 		m_ownsPairCache = true;
 	}
 
 	if (!disableRaycastAccelerator)
 	{
-		m_nullPairCache = new (btAlignedAlloc(sizeof(btNullPairCache),16)) btNullPairCache();
-		m_raycastAccelerator = new (btAlignedAlloc(sizeof(btDbvtBroadphase),16)) btDbvtBroadphase(m_nullPairCache);//m_pairCache);
+		m_nullPairCache = new btNullPairCache();
+		m_raycastAccelerator = new btDbvtBroadphase(m_nullPairCache);//m_pairCache);
 		m_raycastAccelerator->m_deferedcollide = true;//don't add/remove pairs
 	}
 
@@ -404,8 +402,7 @@ m_raycastAccelerator(0)
 		// allocate edge buffers
 		for (int i = 0; i < 3; i++)
 		{
-			m_pEdgesRawPtr[i] = btAlignedAlloc(sizeof(Edge)*maxHandles*2,16);
-			m_pEdges[i] = new(m_pEdgesRawPtr[i]) Edge[maxHandles * 2];
+			m_pEdges[i] = new Edge[maxHandles * 2];
 		}
 	}
 	//removed overlap management
@@ -436,23 +433,18 @@ btAxisSweep3Internal<BP_FP_INT_TYPE>::~btAxisSweep3Internal()
 {
 	if (m_raycastAccelerator)
 	{
-		m_nullPairCache->~btOverlappingPairCache();
-		btAlignedFree(m_nullPairCache);
-		m_raycastAccelerator->~btDbvtBroadphase();
-		btAlignedFree (m_raycastAccelerator);
+		delete m_nullPairCache;
+		delete m_raycastAccelerator;
 	}
 
 	for (int i = 2; i >= 0; i--)
 	{
-		btAlignedFree(m_pEdgesRawPtr[i]);
+		delete m_pEdges[i];
 	}
 	delete [] m_pHandles;
 
 	if (m_ownsPairCache)
-	{
-		m_pairCache->~btOverlappingPairCache();
-		btAlignedFree(m_pairCache);
-	}
+		delete m_pairCache;
 }
 
 template <typename BP_FP_INT_TYPE>

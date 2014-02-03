@@ -69,7 +69,7 @@ static void						getmaxdepth(const btDbvtNode* node,int depth,int& maxdepth)
 static DBVT_INLINE void			deletenode(	btDbvt* pdbvt,
 										   btDbvtNode* node)
 {
-	btAlignedFree(pdbvt->m_free);
+	delete pdbvt->m_free;
 	pdbvt->m_free=node;
 }
 
@@ -95,7 +95,7 @@ static DBVT_INLINE btDbvtNode*	createnode(	btDbvt* pdbvt,
 	if(pdbvt->m_free)
 	{ node=pdbvt->m_free;pdbvt->m_free=0; }
 	else
-	{ node=new(btAlignedAlloc(sizeof(btDbvtNode),16)) btDbvtNode(); }
+	{ node=new btDbvtNode(); }
 	node->parent	=	parent;
 	node->data	=	data;
 	node->dataAsInt	=	0;
@@ -136,7 +136,7 @@ static DBVT_INLINE btDbvtNode*	createnode(	btDbvt* pdbvt,
 	if(pdbvt->m_free)
 	{ node=pdbvt->m_free;pdbvt->m_free=0; }
 	else
-	{ node=new(btAlignedAlloc(sizeof(btDbvtNode),16)) btDbvtNode(); }
+	{ node=new btDbvtNode(); }
 	node->parent	=	parent;
 	node->data	=	NULL;
 	node->dataAsInt	=	data;
@@ -457,7 +457,7 @@ void			btDbvt::clear()
 {
 	if(m_root)	
 		recursedeletenode(this,m_root);
-	btAlignedFree(m_free);
+	delete m_free;
 	m_free=0;
 	m_lkhd		=	-1;
 	m_stkStack.clear();

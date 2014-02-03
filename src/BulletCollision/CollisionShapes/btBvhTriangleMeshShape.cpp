@@ -54,8 +54,7 @@ m_ownsBvh(false)
 
 	if (buildBvh)
 	{
-		void* mem = btAlignedAlloc(sizeof(btOptimizedBvh),16);
-		m_bvh = new (mem) btOptimizedBvh();
+		m_bvh = new btOptimizedBvh();
 		
 		m_bvh->build(meshInterface,m_useQuantizedAabbCompression,bvhAabbMin,bvhAabbMax);
 		m_ownsBvh = true;
@@ -85,8 +84,7 @@ btBvhTriangleMeshShape::~btBvhTriangleMeshShape()
 {
 	if (m_ownsBvh)
 	{
-		m_bvh->~btOptimizedBvh();
-		btAlignedFree(m_bvh);
+		delete m_bvh;
 	}
 }
 
@@ -341,12 +339,10 @@ void   btBvhTriangleMeshShape::buildOptimizedBvh()
 {
 	if (m_ownsBvh)
 	{
-		m_bvh->~btOptimizedBvh();
-		btAlignedFree(m_bvh);
+		delete m_bvh;
 	}
 	///m_localAabbMin/m_localAabbMax is already re-calculated in btTriangleMeshShape. We could just scale aabb, but this needs some more work
-	void* mem = btAlignedAlloc(sizeof(btOptimizedBvh),16);
-	m_bvh = new(mem) btOptimizedBvh();
+	m_bvh = new btOptimizedBvh();
 	//rebuild the bvh...
 	m_bvh->build(m_meshInterface,m_useQuantizedAabbCompression,m_localAabbMin,m_localAabbMax);
 	m_ownsBvh = true;

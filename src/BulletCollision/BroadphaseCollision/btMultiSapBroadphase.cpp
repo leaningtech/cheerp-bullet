@@ -46,8 +46,7 @@ m_invalidPair(0)
 	if (!m_overlappingPairs)
 	{
 		m_ownsPairCache = true;
-		void* mem = btAlignedAlloc(sizeof(btSortedOverlappingPairCache),16);
-		m_overlappingPairs = new (mem)btSortedOverlappingPairCache();
+		m_overlappingPairs = new btSortedOverlappingPairCache();
 	}
 
 	struct btMultiSapOverlapFilterCallback : public btOverlapFilterCallback
@@ -67,8 +66,7 @@ m_invalidPair(0)
 		}
 	};
 
-	void* mem = btAlignedAlloc(sizeof(btMultiSapOverlapFilterCallback),16);
-	m_filterCallback = new (mem)btMultiSapOverlapFilterCallback();
+	m_filterCallback = new btMultiSapOverlapFilterCallback();
 
 	m_overlappingPairs->setOverlapFilterCallback(m_filterCallback);
 //	mem = btAlignedAlloc(sizeof(btSimpleBroadphase),16);
@@ -78,10 +76,7 @@ m_invalidPair(0)
 btMultiSapBroadphase::~btMultiSapBroadphase()
 {
 	if (m_ownsPairCache)
-	{
-		m_overlappingPairs->~btOverlappingPairCache();
-		btAlignedFree(m_overlappingPairs);
-	}
+		delete m_overlappingPairs;
 }
 
 
@@ -108,8 +103,7 @@ btBroadphaseProxy*	btMultiSapBroadphase::createProxy(  const btVector3& aabbMin,
 {
 	//void* ignoreMe -> we could think of recursive multi-sap, if someone is interested
 
-	void* mem = btAlignedAlloc(sizeof(btMultiSapProxy),16);
-	btMultiSapProxy* proxy = new (mem)btMultiSapProxy(aabbMin,  aabbMax,shapeType,userPtr, collisionFilterGroup,collisionFilterMask);
+	btMultiSapProxy* proxy = new btMultiSapProxy(aabbMin,  aabbMax,shapeType,userPtr, collisionFilterGroup,collisionFilterMask);
 	m_multiSapProxies.push_back(proxy);
 
 	///this should deal with inserting/removal into child broadphases
@@ -127,8 +121,7 @@ void	btMultiSapBroadphase::destroyProxy(btBroadphaseProxy* /*proxy*/,btDispatche
 
 void	btMultiSapBroadphase::addToChildBroadphase(btMultiSapProxy* parentMultiSapProxy, btBroadphaseProxy* childProxy, btBroadphaseInterface*	childBroadphase)
 {
-	void* mem = btAlignedAlloc(sizeof(btBridgeProxy),16);
-	btBridgeProxy* bridgeProxyRef = new(mem) btBridgeProxy;
+	btBridgeProxy* bridgeProxyRef = new btBridgeProxy;
 	bridgeProxyRef->m_childProxy = childProxy;
 	bridgeProxyRef->m_childBroadphase = childBroadphase;
 	parentMultiSapProxy->m_bridgeProxies.push_back(bridgeProxyRef);

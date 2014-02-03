@@ -32,8 +32,7 @@ static void btFreeDefault(void *ptr)
 static btAllocFunc *sAllocFunc = btAllocDefault;
 static btFreeFunc *sFreeFunc = btFreeDefault;
 
-
-
+#ifndef __DUETTO__
 #if defined (BT_HAS_ALIGNED_ALLOCATOR)
 #include <malloc.h>
 static void *btAlignedAllocDefault(size_t size, int alignment)
@@ -178,4 +177,4 @@ void	btAlignedFreeInternal	(void* ptr)
 }
 
 #endif //BT_DEBUG_MEMORY_ALLOCATIONS
-
+#endif

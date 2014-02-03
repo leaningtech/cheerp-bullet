@@ -325,7 +325,9 @@ typedef float32x4_t btSimdFloat4;
 
 
 
-
+#ifdef __DUETTO__
+#define BT_DECLARE_ALIGNED_ALLOCATOR()
+#else
 #define BT_DECLARE_ALIGNED_ALLOCATOR() \
    SIMD_FORCE_INLINE void* operator new(size_t sizeInBytes)   { return btAlignedAlloc(sizeInBytes,16); }   \
    SIMD_FORCE_INLINE void  operator delete(void* ptr)         { btAlignedFree(ptr); }   \
@@ -336,7 +338,7 @@ typedef float32x4_t btSimdFloat4;
    SIMD_FORCE_INLINE void* operator new[](size_t, void* ptr)   { return ptr; }   \
    SIMD_FORCE_INLINE void  operator delete[](void*, void*)      { }   \
 
-
+#endif
 
 #if defined(BT_USE_DOUBLE_PRECISION) || defined(BT_FORCE_DOUBLE_FUNCTIONS)
 		

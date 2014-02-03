@@ -422,8 +422,7 @@ void HullLibrary::checkit(btHullTriangle *t)
 
 btHullTriangle*	HullLibrary::allocateTriangle(int a,int b,int c)
 {
-	void* mem = btAlignedAlloc(sizeof(btHullTriangle),16);
-	btHullTriangle* tr = new (mem)btHullTriangle(a,b,c);
+	btHullTriangle* tr = new btHullTriangle(a,b,c);
 	tr->id = m_tris.size();
 	m_tris.push_back(tr);
 
@@ -434,8 +433,7 @@ void	HullLibrary::deAllocateTriangle(btHullTriangle* tri)
 {
 	btAssert(m_tris[tri->id]==tri);
 	m_tris[tri->id]=NULL;
-	tri->~btHullTriangle();
-	btAlignedFree(tri);
+	delete tri;
 }
 
 

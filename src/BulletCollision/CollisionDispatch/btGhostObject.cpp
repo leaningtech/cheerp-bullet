@@ -58,13 +58,12 @@ void btGhostObject::removeOverlappingObjectInternal(btBroadphaseProxy* otherProx
 
 btPairCachingGhostObject::btPairCachingGhostObject()
 {
-	m_hashPairCache = new (btAlignedAlloc(sizeof(btHashedOverlappingPairCache),16)) btHashedOverlappingPairCache();
+	m_hashPairCache = new btHashedOverlappingPairCache();
 }
 
 btPairCachingGhostObject::~btPairCachingGhostObject()
 {
-	m_hashPairCache->~btHashedOverlappingPairCache();
-	btAlignedFree( m_hashPairCache );
+	delete m_hashPairCache;
 }
 
 void btPairCachingGhostObject::addOverlappingObjectInternal(btBroadphaseProxy* otherProxy,btBroadphaseProxy* thisProxy)

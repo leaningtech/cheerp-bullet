@@ -122,9 +122,9 @@ btSoftBody::~btSoftBody()
 
 	releaseClusters();
 	for(i=0;i<m_materials.size();++i) 
-		btAlignedFree(m_materials[i]);
+		delete m_materials[i];
 	for(i=0;i<m_joints.size();++i) 
-		btAlignedFree(m_joints[i]);
+		delete m_joints[i];
 }
 
 //
@@ -173,7 +173,7 @@ bool			btSoftBody::checkFace(int node0,int node1,int node2) const
 //
 btSoftBody::Material*		btSoftBody::appendMaterial()
 {
-	Material*	pm=new(btAlignedAlloc(sizeof(Material),16)) Material();
+	Material*	pm=new Material();
 	if(m_materials.size()>0)
 		*pm=*m_materials[0];
 	else
@@ -387,7 +387,7 @@ void			btSoftBody::appendAnchor(int node,btRigidBody* body, const btVector3& loc
 //
 void			btSoftBody::appendLinearJoint(const LJoint::Specs& specs,Cluster* body0,Body body1)
 {
-	LJoint*		pj	=	new(btAlignedAlloc(sizeof(LJoint),16)) LJoint();
+	LJoint*		pj	=	new LJoint();
 	pj->m_bodies[0]	=	body0;
 	pj->m_bodies[1]	=	body1;
 	pj->m_refs[0]	=	pj->m_bodies[0].xform().inverse()*specs.position;
@@ -413,7 +413,7 @@ void			btSoftBody::appendLinearJoint(const LJoint::Specs& specs,btSoftBody* body
 //
 void			btSoftBody::appendAngularJoint(const AJoint::Specs& specs,Cluster* body0,Body body1)
 {
-	AJoint*		pj	=	new(btAlignedAlloc(sizeof(AJoint),16)) AJoint();
+	AJoint*		pj	=	new AJoint();
 	pj->m_bodies[0]	=	body0;
 	pj->m_bodies[1]	=	body1;
 	pj->m_refs[0]	=	pj->m_bodies[0].xform().inverse().getBasis()*specs.axis;
@@ -1177,8 +1177,7 @@ void			btSoftBody::releaseCluster(int index)
 {
 	Cluster*	c=m_clusters[index];
 	if(c->m_leaf) m_cdbvt.remove(c->m_leaf);
-	c->~Cluster();
-	btAlignedFree(c);
+	delete c;
 	m_clusters.remove(c);
 }
 
@@ -1196,7 +1195,7 @@ int				btSoftBody::generateClusters(int k,int maxiterations)
 	m_clusters.resize(btMin(k,m_nodes.size()));
 	for(i=0;i<m_clusters.size();++i)
 	{
-		m_clusters[i]			=	new(btAlignedAlloc(sizeof(Cluster),16)) Cluster();
+		m_clusters[i]			=	new Cluster();
 		m_clusters[i]->m_collide=	true;
 	}
 	k=m_clusters.size();
@@ -1290,7 +1289,7 @@ int				btSoftBody::generateClusters(int k,int maxiterations)
 		/* Master		*/ 
 		if(m_clusters.size()>1)
 		{
-			Cluster*	pmaster=new(btAlignedAlloc(sizeof(Cluster),16)) Cluster();
+			Cluster*	pmaster=new Cluster();
 			pmaster->m_collide	=	false;
 			pmaster->m_nodes.reserve(m_nodes.size());
 			for(int i=0;i<m_nodes.size();++i) pmaster->m_nodes.push_back(&m_nodes[i]);
@@ -1313,7 +1312,7 @@ int				btSoftBody::generateClusters(int k,int maxiterations)
 			m_clusters.resize(m_tetras.size());
 			for(i=0;i<m_clusters.size();++i)
 			{
-				m_clusters[i]			=	new(btAlignedAlloc(sizeof(Cluster),16)) Cluster();
+				m_clusters[i]			=	new Cluster();
 				m_clusters[i]->m_collide=	true;
 			}
 			for (i=0;i<m_tetras.size();i++)
@@ -1329,7 +1328,7 @@ int				btSoftBody::generateClusters(int k,int maxiterations)
 			m_clusters.resize(m_faces.size());
 			for(i=0;i<m_clusters.size();++i)
 			{
-				m_clusters[i]			=	new(btAlignedAlloc(sizeof(Cluster),16)) Cluster();
+				m_clusters[i]			=	new Cluster();
 				m_clusters[i]->m_collide=	true;
 			}
 
@@ -2642,7 +2641,7 @@ void					btSoftBody::cleanupClusters()
 		m_joints[i]->Terminate(m_sst.sdt);
 		if(m_joints[i]->m_delete)
 		{
-			btAlignedFree(m_joints[i]);
+			delete m_joints[i];
 			m_joints.remove(m_joints[i--]);
 		}	
 	}

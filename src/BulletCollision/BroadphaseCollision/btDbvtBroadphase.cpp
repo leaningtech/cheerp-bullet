@@ -134,7 +134,7 @@ btDbvtBroadphase::btDbvtBroadphase(btOverlappingPairCache* paircache)
 	m_updates_call		=	0;
 	m_updates_done		=	0;
 	m_updates_ratio		=	0;
-	m_paircache			=	paircache? paircache	: new(btAlignedAlloc(sizeof(btHashedOverlappingPairCache),16)) btHashedOverlappingPairCache();
+	m_paircache			=	paircache? paircache	: new btHashedOverlappingPairCache();
 	m_gid				=	0;
 	m_pid				=	0;
 	m_cid				=	0;
@@ -151,10 +151,7 @@ btDbvtBroadphase::btDbvtBroadphase(btOverlappingPairCache* paircache)
 btDbvtBroadphase::~btDbvtBroadphase()
 {
 	if(m_releasepaircache) 
-	{
-		m_paircache->~btOverlappingPairCache();
-		btAlignedFree(m_paircache);
-	}
+		delete m_paircache;
 }
 
 //
@@ -167,7 +164,7 @@ btBroadphaseProxy*				btDbvtBroadphase::createProxy(	const btVector3& aabbMin,
 															  btDispatcher* /*dispatcher*/,
 															  void* /*multiSapProxy*/)
 {
-	btDbvtProxy*		proxy=new(btAlignedAlloc(sizeof(btDbvtProxy),16)) btDbvtProxy(	aabbMin,aabbMax,userPtr,
+	btDbvtProxy*		proxy=new btDbvtProxy(	aabbMin,aabbMax,userPtr,
 		collisionFilterGroup,
 		collisionFilterMask);
 
@@ -199,7 +196,7 @@ void							btDbvtBroadphase::destroyProxy(	btBroadphaseProxy* absproxy,
 		m_sets[0].remove(proxy->leaf);
 	listremove(proxy,m_stageRoots[proxy->stage]);
 	m_paircache->removeOverlappingPairsContainingProxy(proxy,dispatcher);
-	btAlignedFree(proxy);
+	delete proxy;
 	m_needcleanup=true;
 }
 

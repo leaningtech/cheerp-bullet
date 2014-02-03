@@ -715,7 +715,7 @@ struct btSoftColliders
 				btSoftBody::CJoint	joint;
 				if(SolveContact(res,cluster,m_colObjWrap->getCollisionObject(),joint))//prb,joint))
 				{
-					btSoftBody::CJoint*	pj=new(btAlignedAlloc(sizeof(btSoftBody::CJoint),16)) btSoftBody::CJoint();
+					btSoftBody::CJoint*	pj=new btSoftBody::CJoint();
 					*pj=joint;psb->m_joints.push_back(pj);
 					if(m_colObjWrap->getCollisionObject()->isStaticOrKinematicObject())
 					{
@@ -778,7 +778,7 @@ struct btSoftColliders
 					btSoftBody::CJoint	joint;
 					if(SolveContact(res,cla,clb,joint))
 					{
-						btSoftBody::CJoint*	pj=new(btAlignedAlloc(sizeof(btSoftBody::CJoint),16)) btSoftBody::CJoint();
+						btSoftBody::CJoint*	pj=new btSoftBody::CJoint();
 						*pj=joint;bodies[0]->m_joints.push_back(pj);
 						pj->m_erp	*=	btMax(bodies[0]->m_cfg.kSSHR_CL,bodies[1]->m_cfg.kSSHR_CL);
 						pj->m_split	*=	(bodies[0]->m_cfg.kSS_SPLT_CL+bodies[1]->m_cfg.kSS_SPLT_CL)/2;

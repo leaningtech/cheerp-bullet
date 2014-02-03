@@ -25,24 +25,17 @@ subject to the following restrictions:
 btSoftBodyRigidBodyCollisionConfiguration::btSoftBodyRigidBodyCollisionConfiguration(const btDefaultCollisionConstructionInfo& constructionInfo)
 :btDefaultCollisionConfiguration(constructionInfo)
 {
-	void* mem;
+	m_softSoftCreateFunc = new btSoftSoftCollisionAlgorithm::CreateFunc;
 
-	mem = btAlignedAlloc(sizeof(btSoftSoftCollisionAlgorithm::CreateFunc),16);
-	m_softSoftCreateFunc = new(mem) btSoftSoftCollisionAlgorithm::CreateFunc;
+	m_softRigidConvexCreateFunc = new btSoftRigidCollisionAlgorithm::CreateFunc;
 
-	mem = btAlignedAlloc(sizeof(btSoftRigidCollisionAlgorithm::CreateFunc),16);
-	m_softRigidConvexCreateFunc = new(mem) btSoftRigidCollisionAlgorithm::CreateFunc;
-
-	mem = btAlignedAlloc(sizeof(btSoftRigidCollisionAlgorithm::CreateFunc),16);
-	m_swappedSoftRigidConvexCreateFunc = new(mem) btSoftRigidCollisionAlgorithm::CreateFunc;
+	m_swappedSoftRigidConvexCreateFunc = new btSoftRigidCollisionAlgorithm::CreateFunc;
 	m_swappedSoftRigidConvexCreateFunc->m_swapped=true;
 
 #ifdef ENABLE_SOFTBODY_CONCAVE_COLLISIONS
-	mem = btAlignedAlloc(sizeof(btSoftBodyConcaveCollisionAlgorithm::CreateFunc),16);
-	m_softRigidConcaveCreateFunc = new(mem) btSoftBodyConcaveCollisionAlgorithm::CreateFunc;
+	m_softRigidConcaveCreateFunc = new btSoftBodyConcaveCollisionAlgorithm::CreateFunc;
 
-	mem = btAlignedAlloc(sizeof(btSoftBodyConcaveCollisionAlgorithm::CreateFunc),16);
-	m_swappedSoftRigidConcaveCreateFunc = new(mem) btSoftBodyConcaveCollisionAlgorithm::SwappedCreateFunc;
+	m_swappedSoftRigidConcaveCreateFunc = new btSoftBodyConcaveCollisionAlgorithm::SwappedCreateFunc;
 	m_swappedSoftRigidConcaveCreateFunc->m_swapped=true;
 #endif
 
@@ -74,21 +67,16 @@ btSoftBodyRigidBodyCollisionConfiguration::btSoftBodyRigidBodyCollisionConfigura
 
 btSoftBodyRigidBodyCollisionConfiguration::~btSoftBodyRigidBodyCollisionConfiguration()
 {
-	m_softSoftCreateFunc->~btCollisionAlgorithmCreateFunc();
-	btAlignedFree(	m_softSoftCreateFunc);
+	delete m_softSoftCreateFunc;
 
-	m_softRigidConvexCreateFunc->~btCollisionAlgorithmCreateFunc();
-	btAlignedFree(	m_softRigidConvexCreateFunc);
+	delete m_softRigidConvexCreateFunc;
 
-	m_swappedSoftRigidConvexCreateFunc->~btCollisionAlgorithmCreateFunc();
-	btAlignedFree(	m_swappedSoftRigidConvexCreateFunc);
+	delete m_swappedSoftRigidConvexCreateFunc;
 
 #ifdef ENABLE_SOFTBODY_CONCAVE_COLLISIONS
-	m_softRigidConcaveCreateFunc->~btCollisionAlgorithmCreateFunc();
-	btAlignedFree(	m_softRigidConcaveCreateFunc);
+	delete m_softRigidConcaveCreateFunc;
 
-	m_swappedSoftRigidConcaveCreateFunc->~btCollisionAlgorithmCreateFunc();
-	btAlignedFree(	m_swappedSoftRigidConcaveCreateFunc);
+	delete m_swappedSoftRigidConcaveCreateFunc;
 #endif
 }
 

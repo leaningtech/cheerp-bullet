@@ -34,6 +34,11 @@ void*	btAlignedAllocInternal	(size_t size, int alignment,int line,char* filename
 
 void	btAlignedFreeInternal	(void* ptr,int line,char* filename);
 
+#elif defined(__DUETTO__)
+
+	#define btAlignedAlloc(size,alignment) malloc(size)
+	#define btAlignedFree(ptr) free(ptr)
+
 #else
 	void*	btAlignedAllocInternal	(size_t size, int alignment);
 	void	btAlignedFreeInternal	(void* ptr);
@@ -83,11 +88,11 @@ public:
 	const_pointer address   ( const_reference  ref ) const                           { return &ref; }
 	pointer       allocate  ( size_type        n   , const_pointer *      hint = 0 ) {
 		(void)hint;
-		return reinterpret_cast< pointer >(btAlignedAlloc( sizeof(value_type) * n , Alignment ));
+		return reinterpret_cast< pointer >(malloc(sizeof(value_type) * n));
 	}
 	void          construct ( pointer          ptr , const value_type &   value    ) { new (ptr) value_type( value ); }
 	void          deallocate( pointer          ptr ) {
-		btAlignedFree( reinterpret_cast< void * >( ptr ) );
+		free(ptr);
 	}
 	void          destroy   ( pointer          ptr )                                 { ptr->~value_type(); }
 	

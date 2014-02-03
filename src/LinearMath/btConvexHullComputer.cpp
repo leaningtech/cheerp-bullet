@@ -673,12 +673,12 @@ class btConvexHullInternal
 
 				PoolArray(int size): size(size), next(NULL)
 				{
-					array = (T*) btAlignedAlloc(sizeof(T) * size, 16);
+					array = (T*) malloc(sizeof(T) * size);
 				}
 
 				~PoolArray()
 				{
-					btAlignedFree(array);
+					free(array);
 				}
 
 				T* init()
@@ -711,8 +711,7 @@ class btConvexHullInternal
 					{
 						PoolArray<T>* p = arrays;
 						arrays = p->next;
-						p->~PoolArray<T>();
-						btAlignedFree(p);
+						delete p;
 					}
 				}
 
@@ -739,7 +738,7 @@ class btConvexHullInternal
 						}
 						else
 						{
-							p = new(btAlignedAlloc(sizeof(PoolArray<T>), 16)) PoolArray<T>(arraySize);
+							p = new PoolArray<T>(arraySize);
 							p->next = arrays;
 							arrays = p;
 						}

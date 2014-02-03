@@ -57,7 +57,6 @@ protected:
 	
 	btSimpleBroadphaseProxy* m_pHandles;						// handles pool
 
-	void* m_pHandlesRawPtr;
 	int		m_firstFreeHandle;		// free handles list
 	
 	int allocHandle()
