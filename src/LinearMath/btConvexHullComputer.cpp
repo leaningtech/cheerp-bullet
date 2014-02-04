@@ -18,6 +18,10 @@ subject to the following restrictions:
 #include "btAlignedObjectArray.h"
 #include "btMinMax.h"
 #include "btVector3.h"
+#ifdef __DUETTO__
+#define DUETTO_EMULATE_INT64
+#include <duetto/int64utils.h>
+#endif
 
 #ifdef __GNUC__
 	#include <stdint.h>
@@ -155,7 +159,7 @@ class btConvexHullInternal
 				{
 				}
 
-				Int128(int64_t value): low(value), high((value >= 0) ? 0 : (uint64_t) -1LL)
+				Int128(int64_t value): low(value), high((value >= 0) ? (uint64_t) 0 : (uint64_t) -1LL)
 				{
 				}
 
@@ -232,7 +236,7 @@ class btConvexHullInternal
 
 				btScalar toScalar() const
 				{
-					return ((int64_t) high >= 0) ? btScalar(high) * (btScalar(0x100000000LL) * btScalar(0x100000000LL)) + btScalar(low)
+					return ((int64_t) high >= 0) ? btScalar(high) * (btScalar(0x10000L) * btScalar(0x10000L) * btScalar(0x10000L) * btScalar(0x10000L)) + btScalar(low)
 						: -(-*this).toScalar();
 				}
 
