@@ -123,7 +123,7 @@ void btClock::reset()
 	SYS_TIMEBASE_GET( newTime );
 	m_data->mStartTime = newTime;
 #elif __DUETTO__
-	m_data->mStartTime = client::Date.now();
+	m_data->mStartTime = client::Date::now();
 #else
 	gettimeofday(&m_data->mStartTime, 0);
 #endif
@@ -177,7 +177,7 @@ unsigned long int btClock::getTimeMilliseconds()
 
 		return (unsigned long int)((double(newTime-m_data->mStartTime)) / dFreq);
 #elif __DUETTO__
-		double currentTime = client::Date.now();
+		double currentTime = client::Date::now();
 		return currentTime - m_data->mStartTime;
 #else
 
@@ -239,7 +239,7 @@ unsigned long int btClock::getTimeMicroseconds()
 		return (unsigned long int)((double(newTime-m_data->mStartTime)) / dFreq);
 #elif __DUETTO__
 		// We don't have microsecond timing using Date
-		double currentTime = client::Date.now();
+		double currentTime = client::Date::now();
 		return (currentTime - m_data->mStartTime) * 1000;
 #else
 
