@@ -262,23 +262,3 @@ public:
 
 // global allocator
 GIM_STANDARD_ALLOCATOR g_main_allocator;
-
-
-void * btPoolAlloc(size_t size)
-{
-	return g_main_allocator.allocate(size);
-}
-
-void * btPoolRealloc(void *ptr, size_t oldsize, size_t newsize)
-{
-	void * newptr = btPoolAlloc(newsize);
-    size_t copysize = oldsize<newsize?oldsize:newsize;
-    memcpy(newptr,ptr,copysize);
-    btPoolFree(ptr);
-    return newptr;
-}
-
-void btPoolFree(void *ptr)
-{
-	g_main_allocator.freeMemory(ptr);
-}

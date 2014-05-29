@@ -107,15 +107,6 @@ void * gim_alloca(size_t size)
 }
 
 
-void * gim_realloc(void *ptr, size_t oldsize, size_t newsize)
-{
- 	void * newptr = gim_alloc(newsize);
-    size_t copysize = oldsize<newsize?oldsize:newsize;
-    gim_simd_memcpy(newptr,ptr,copysize);
-    gim_free(ptr);
-    return newptr;
-}
-
 void gim_free(void *ptr)
 {
 	if (!ptr) return;

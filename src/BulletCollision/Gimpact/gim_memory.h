@@ -115,76 +115,12 @@ void * gim_alloca(size_t size);
 void * gim_realloc(void *ptr, size_t oldsize, size_t newsize);
 void gim_free(void *ptr);
 
-
-
-#if defined (_WIN32) && !defined(__MINGW32__) && !defined(__CYGWIN__)
-    #define GIM_SIMD_MEMORY 1
-#endif
-
-//! SIMD POINTER INTEGER
-#define SIMD_T GUINT64
-//! SIMD INTEGER SIZE
-#define SIMD_T_SIZE sizeof(SIMD_T)
-
-
-inline void gim_simd_memcpy(void * dst, const void * src, size_t copysize)
-{
-#ifdef GIM_SIMD_MEMORY
-/*
-//'long long int' is incompatible with visual studio 6...
-    //copy words
-    SIMD_T * ui_src_ptr = (SIMD_T *)src;
-    SIMD_T * ui_dst_ptr = (SIMD_T *)dst;
-    while(copysize>=SIMD_T_SIZE)
-    {
-        *(ui_dst_ptr++) = *(ui_src_ptr++);
-        copysize-=SIMD_T_SIZE;
-    }
-    if(copysize==0) return;
-*/
-
-    char * c_src_ptr = (char *)src;
-    char * c_dst_ptr = (char *)dst;
-    while(copysize>0)
-    {
-        *(c_dst_ptr++) = *(c_src_ptr++);
-        copysize--;
-    }
-    return;
-#else
-    memcpy(dst,src,copysize);
-#endif
-}
-
-
-
 template<class T>
 inline void gim_swap_elements(T* _array,size_t _i,size_t _j)
 {
 	T _e_tmp_ = _array[_i];
 	_array[_i] = _array[_j];
 	_array[_j] = _e_tmp_;
-}
-
-
-template<class T>
-inline void gim_swap_elements_memcpy(T* _array,size_t _i,size_t _j)
-{
-	char _e_tmp_[sizeof(T)];
-	gim_simd_memcpy(_e_tmp_,&_array[_i],sizeof(T));
-	gim_simd_memcpy(&_array[_i],&_array[_j],sizeof(T));
-	gim_simd_memcpy(&_array[_j],_e_tmp_,sizeof(T));
-}
-
-template <int SIZE>
-inline void gim_swap_elements_ptr(char * _array,size_t _i,size_t _j)
-{
-	char _e_tmp_[SIZE];
-	_i*=SIZE;
-	_j*=SIZE;
-	gim_simd_memcpy(_e_tmp_,_array+_i,SIZE);
-	gim_simd_memcpy(_array+_i,_array+_j,SIZE);
-	gim_simd_memcpy(_array+_j,_e_tmp_,SIZE);
 }
 
 #endif // GIM_MEMORY_H_INCLUDED
