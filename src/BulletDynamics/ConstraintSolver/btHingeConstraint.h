@@ -343,7 +343,7 @@ struct	btHingeConstraintFloatData
 };
 
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 SIMD_FORCE_INLINE	int	btHingeConstraint::calculateSerializeBufferSize() const
 {
 	return sizeof(btHingeConstraintData);

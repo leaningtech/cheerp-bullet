@@ -76,7 +76,7 @@ struct btGeneric6DofSpringConstraintData
 	float		m_springDamping[6];
 };
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 SIMD_FORCE_INLINE	int	btGeneric6DofSpringConstraint::calculateSerializeBufferSize() const
 {
 	return sizeof(btGeneric6DofSpringConstraintData);

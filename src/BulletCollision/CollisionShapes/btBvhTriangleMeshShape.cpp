@@ -348,7 +348,7 @@ void   btBvhTriangleMeshShape::setOptimizedBvh(btOptimizedBvh* bvh, const btVect
 }
 
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btBvhTriangleMeshShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {

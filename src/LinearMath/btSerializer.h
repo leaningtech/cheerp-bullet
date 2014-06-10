@@ -20,12 +20,12 @@ subject to the following restrictions:
 #include "btStackAlloc.h"
 #include "btHashMap.h"
 
-#if !defined( __CELLOS_LV2__) && !defined(__MWERKS__) && !defined(__DUETTO__)
+#if !defined( __CELLOS_LV2__) && !defined(__MWERKS__) && !defined(__CHEERP__)
 #include <memory.h>
 #endif
 #include <string.h>
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 
 ///only the 32bit versions for now
 extern char sBulletDNAstr[];

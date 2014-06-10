@@ -34,7 +34,7 @@ void*	btAlignedAllocInternal	(size_t size, int alignment,int line,char* filename
 
 void	btAlignedFreeInternal	(void* ptr,int line,char* filename);
 
-#elif defined(__DUETTO__)
+#elif defined(__CHEERP__)
 
 	#define btAlignedAlloc(size,alignment) malloc(size)
 	#define btAlignedFree(ptr) free(ptr)

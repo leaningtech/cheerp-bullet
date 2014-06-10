@@ -357,7 +357,7 @@ int	btRigidBody::calculateSerializeBufferSize()	const
 	return sz;
 }
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btRigidBody::serialize(void* dataBuffer, class btSerializer* serializer) const
 {

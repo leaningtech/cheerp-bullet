@@ -325,7 +325,7 @@ typedef float32x4_t btSimdFloat4;
 
 
 
-#ifdef __DUETTO__
+#ifdef __CHEERP__
 #define BT_DECLARE_ALIGNED_ALLOCATOR()
 #else
 #define BT_DECLARE_ALIGNED_ALLOCATOR() \
@@ -637,7 +637,7 @@ struct btTypedObject
 };
 
 
-#ifndef __DUETTO__ 
+#ifndef __CHEERP__
 ///align a pointer to the provided alignment, upwards
 template <typename T>T* btAlignPointer(T* unalignedPtr, size_t alignment)
 {

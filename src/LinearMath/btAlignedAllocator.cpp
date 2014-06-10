@@ -32,7 +32,7 @@ static void btFreeDefault(void *ptr)
 static btAllocFunc *sAllocFunc = btAllocDefault;
 static btFreeFunc *sFreeFunc = btFreeDefault;
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 #if defined (BT_HAS_ALIGNED_ALLOCATOR)
 #include <malloc.h>
 static void *btAlignedAllocDefault(size_t size, int alignment)

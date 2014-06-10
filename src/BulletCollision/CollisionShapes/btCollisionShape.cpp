@@ -95,7 +95,7 @@ void btCollisionShape::calculateTemporalAabb(const btTransform& curTrans,const b
 	temporalAabbMax += angularMotion3d;
 }
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btCollisionShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {

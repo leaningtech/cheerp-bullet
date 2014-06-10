@@ -165,7 +165,7 @@ bool btConvexHullShape::isInside(const btVector3& ,btScalar ) const
 	return false;
 }
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btConvexHullShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {

@@ -1,14 +1,14 @@
-Bullet physics library ported for Duetto
+Bullet physics library ported for Cheerp
 ========================================
 
 Please report bugs on launchpad:
-https://bugs.launchpad.net/duetto
+https://bugs.launchpad.net/cheerp
 
 Installation
 ------------
 
 ```
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/opt/duetto/share/cmake/Modules/DuettoToolchain.cmake -DBUILD_EXTRAS=OFF -DCMAKE_INSTALL_PREFIX=/opt/duetto
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=/opt/cheerp/share/cmake/Modules/CheerpToolchain.cmake -DBUILD_EXTRAS=OFF -DCMAKE_INSTALL_PREFIX=/opt/cheerp
 make
 nodejs Demos/HelloWorld/AppHelloWorld.js
 ```

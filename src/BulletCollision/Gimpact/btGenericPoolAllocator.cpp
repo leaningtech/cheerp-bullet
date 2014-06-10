@@ -21,7 +21,7 @@ subject to the following restrictions:
 #include "btGenericPoolAllocator.h"
 
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 /// *************** btGenericMemoryPool ******************///////////
 
 size_t btGenericMemoryPool::allocate_from_free_nodes(size_t num_elements)

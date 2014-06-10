@@ -327,7 +327,7 @@ void	btSoftRigidDynamicsWorld::rayTestSingle(const btTransform& rayFromTrans,con
 	}
 }
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 void	btSoftRigidDynamicsWorld::serializeSoftBodies(btSerializer* serializer)
 {
 	int i;

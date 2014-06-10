@@ -1494,7 +1494,7 @@ void	btCollisionWorld::debugDrawWorld()
 }
 
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 void	btCollisionWorld::serializeCollisionObjects(btSerializer* serializer)
 {
 	int i;

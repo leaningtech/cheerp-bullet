@@ -67,7 +67,7 @@ void btCollisionObject::activate(bool forceActivation) const
 	}
 }
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 const char* btCollisionObject::serialize(void* dataBuffer, btSerializer* serializer) const
 {
 

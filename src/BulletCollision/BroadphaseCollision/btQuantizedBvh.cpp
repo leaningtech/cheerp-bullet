@@ -842,7 +842,7 @@ unsigned btQuantizedBvh::calculateSerializeBufferSize() const
 	return baseSize + m_curNodeIndex * sizeof(btOptimizedBvhNode);
 }
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 bool btQuantizedBvh::serialize(void *o_alignedDataBuffer, unsigned /*i_dataBufferSize */, bool i_swapEndian) const
 {
 	btAssert(m_subtreeHeaderCount == m_SubtreeHeaders.size());
@@ -1290,7 +1290,7 @@ void btQuantizedBvh::deSerializeDouble(struct btQuantizedBvhDoubleData& quantize
 }
 
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btQuantizedBvh::serialize(void* dataBuffer, btSerializer* serializer) const
 {

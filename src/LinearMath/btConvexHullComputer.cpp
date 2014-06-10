@@ -18,9 +18,9 @@ subject to the following restrictions:
 #include "btAlignedObjectArray.h"
 #include "btMinMax.h"
 #include "btVector3.h"
-#ifdef __DUETTO__
-#define DUETTO_EMULATE_INT64
-#include <duetto/int64utils.h>
+#ifdef __CHEERP__
+#define CHEERP_EMULATE_INT64
+#include <cheerp/int64utils.h>
 #endif
 
 #ifdef __GNUC__

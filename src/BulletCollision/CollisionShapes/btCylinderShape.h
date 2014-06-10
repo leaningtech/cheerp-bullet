@@ -195,7 +195,7 @@ SIMD_FORCE_INLINE	int	btCylinderShape::calculateSerializeBufferSize() const
 	return sizeof(btCylinderShapeData);
 }
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
 SIMD_FORCE_INLINE	const char*	btCylinderShape::serialize(void* dataBuffer, btSerializer* serializer) const
 {

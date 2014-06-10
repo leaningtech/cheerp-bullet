@@ -211,7 +211,7 @@ void	btStridingMeshInterface::calculateAabbBruteForce(btVector3& aabbMin,btVecto
 }
 
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 const char*	btStridingMeshInterface::serialize(void* dataBuffer, btSerializer* serializer) const
 {

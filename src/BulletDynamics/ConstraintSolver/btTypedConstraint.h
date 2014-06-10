@@ -319,7 +319,7 @@ public:
 	///return the local value of parameter
 	virtual	btScalar getParam(int num, int axis = -1) const = 0;
 	
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 	virtual	int	calculateSerializeBufferSize() const;
 
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
@@ -376,7 +376,7 @@ struct	btTypedConstraintData
 	
 };
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 SIMD_FORCE_INLINE	int	btTypedConstraint::calculateSerializeBufferSize() const
 {
 	return sizeof(btTypedConstraintData);

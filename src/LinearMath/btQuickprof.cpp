@@ -13,9 +13,9 @@
 // Credits: The Clock class was inspired by the Timer classes in 
 // Ogre (www.ogre3d.org).
 
-#ifdef __DUETTO__
-#include <duetto/client.h>
-#include <duetto/clientlib.h>
+#ifdef __CHEERP__
+#include <cheerp/client.h>
+#include <cheerp/clientlib.h>
 #endif
 
 #include "btQuickprof.h"
@@ -70,7 +70,7 @@ struct btClockData
 #else
 #ifdef __CELLOS_LV2__
 	uint64_t	mStartTime;
-#elif __DUETTO__
+#elif __CHEERP__
 	double		mStartTime;
 #else
 	struct timeval mStartTime;
@@ -122,7 +122,7 @@ void btClock::reset()
 	//__asm __volatile__( "mftb %0" : "=r" (newTime) : : "memory");
 	SYS_TIMEBASE_GET( newTime );
 	m_data->mStartTime = newTime;
-#elif __DUETTO__
+#elif __CHEERP__
 	m_data->mStartTime = client::Date::now();
 #else
 	gettimeofday(&m_data->mStartTime, 0);
@@ -176,7 +176,7 @@ unsigned long int btClock::getTimeMilliseconds()
 		//__asm __volatile__( "mftb %0" : "=r" (newTime) : : "memory");
 
 		return (unsigned long int)((double(newTime-m_data->mStartTime)) / dFreq);
-#elif __DUETTO__
+#elif __CHEERP__
 		double currentTime = client::Date::now();
 		return currentTime - m_data->mStartTime;
 #else
@@ -237,7 +237,7 @@ unsigned long int btClock::getTimeMicroseconds()
 		SYS_TIMEBASE_GET( newTime );
 
 		return (unsigned long int)((double(newTime-m_data->mStartTime)) / dFreq);
-#elif __DUETTO__
+#elif __CHEERP__
 		// We don't have microsecond timing using Date
 		double currentTime = client::Date::now();
 		return (currentTime - m_data->mStartTime) * 1000;

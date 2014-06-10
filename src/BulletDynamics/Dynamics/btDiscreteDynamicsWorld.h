@@ -212,7 +212,7 @@ public:
 	{
 		return m_applySpeculativeContactRestitution;
 	}
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 	///Preliminary serialization test for Bullet 2.76. Loading those files requires a separate parser (see Bullet/Demos/SerializeDemo)
 	virtual	void	serialize(btSerializer* serializer);
 #endif

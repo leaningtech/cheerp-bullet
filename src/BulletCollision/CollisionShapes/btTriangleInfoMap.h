@@ -79,7 +79,7 @@ struct	btTriangleInfoMap : public btInternalTriangleInfoMap
 	virtual	int	calculateSerializeBufferSize() const;
 
 	///fills the dataBuffer and returns the struct name (and 0 on failure)
-	#ifndef __DUETTO__
+	#ifndef __CHEERP__
 	virtual	const char*	serialize(void* dataBuffer, btSerializer* serializer) const;
 	#endif
 
@@ -121,7 +121,7 @@ SIMD_FORCE_INLINE	int	btTriangleInfoMap::calculateSerializeBufferSize() const
 	return sizeof(btTriangleInfoMapData);
 }
 
-#ifndef __DUETTO__
+#ifndef __CHEERP__
 ///fills the dataBuffer and returns the struct name (and 0 on failure)
 SIMD_FORCE_INLINE	const char*	btTriangleInfoMap::serialize(void* dataBuffer, btSerializer* serializer) const
 {
