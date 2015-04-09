@@ -82,7 +82,7 @@ gim_free_function  *gim_get_free_handler ()
   return g_freefn;
 }
 
-
+#ifndef __CHEERP__
 void * gim_alloc(size_t size)
 {
 	void * ptr;
@@ -100,6 +100,7 @@ void * gim_alloc(size_t size)
 	}
   	return ptr;
 }
+#endif
 
 void * gim_alloca(size_t size)
 {
