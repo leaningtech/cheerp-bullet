@@ -18,10 +18,6 @@ subject to the following restrictions:
 #include "btAlignedObjectArray.h"
 #include "btMinMax.h"
 #include "btVector3.h"
-#ifdef __CHEERP__
-#define CHEERP_EMULATE_INT64
-#include <cheerp/int64utils.h>
-#endif
 
 #ifdef __GNUC__
 	#include <stdint.h>
